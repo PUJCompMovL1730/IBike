@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<RelativeLayout
+    android:id="@+id/inicio"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="56dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:src="@drawable/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="72dp"
+            android:layout_marginBottom="24dp"
+            android:layout_gravity="center_horizontal" />
+
+
+
+
+        <EditText
+            android:id="@+id/mUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Correo"
+            android:inputType="textEmailAddress"
+            android:paddingTop="40dp"/>
+
+
+
+        <EditText
+            android:id="@+id/mPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingTop="20dp"
+            />
+
+
+
+        <TextView
+            android:id="@+id/mOlvidarPassword"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="¿Olvidaste tu contraseña?"
+            android:gravity="right"
+            android:textSize="16dip"
+            android:paddingTop="10dp"/>
+
+        <Button
+            android:id="@+id/btnIngresar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ingresar"
+            android:layout_alignParentBottom="true"
+            android:backgroundTint="@color/colorPrimary"/>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_alignParentEnd="true">
+
+            <TextView
+                android:id="@+id/mRegistro"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text="Regístrate en iBike"
+                android:gravity="center"
+                android:layout_gravity="bottom"
+                android:layout_alignParentBottom="true"
+                android:textSize="16dip"
+                android:padding="50dp"
+
+                />
+
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+
+</RelativeLayout>
+</ScrollView>

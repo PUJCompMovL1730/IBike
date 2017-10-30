@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true"
+
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="56dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        >
+
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:background="@color/white"
+            android:layout_gravity="center">
+
+            <ImageButton
+                android:id="@+id/imagenPerfil"
+                android:scaleType="fitCenter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/logo"/>
+            <ImageView
+                android:layout_alignStart="@+id/fotoPerfil"
+                android:layout_alignEnd="@+id/fotoPerfil"
+                android:src="@drawable/perfil"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#B3ffffff"/>
+        </RelativeLayout>
+
+
+
+
+        <EditText
+            android:id="@+id/mNombreUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre"
+            android:inputType="textPersonName"
+            />
+        <EditText
+            android:id="@+id/mApellidoUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Apellido"
+            android:inputType="textPersonName"
+            android:paddingTop="20dp"/>
+        <EditText
+            android:id="@+id/mUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Correo"
+            android:inputType="textEmailAddress"
+            android:paddingTop="20dp"/>
+        <EditText
+            android:id="@+id/mPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingTop="20dp"
+            />
+
+        <Button
+            android:id="@+id/btnRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Crear Cuenta"
+            android:layout_alignParentBottom="true"
+            android:backgroundTint="@color/colorPrimary"/>
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom" >
+
+            <TextView
+                android:id="@+id/mRegistro"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text="¿Ya eres miembro?,Ingresa aquí"
+                android:gravity="center"
+                android:layout_gravity="bottom"
+                android:layout_alignParentBottom="true"
+                android:textSize="16dip"
+                android:paddingBottom="20dp"/>
+
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
+    </ScrollView>

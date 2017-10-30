@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">iBike</string>
+    <string name="open">Abrir</string>
+    <string name="close">Cerrar</string>
+    <string name="title_activity_maps">iBike</string>
+
+
+</resources>

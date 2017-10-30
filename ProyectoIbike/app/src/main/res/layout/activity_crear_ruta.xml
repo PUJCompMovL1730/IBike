@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context="co.edu.javeriana.proyectoibike.CrearRuta">
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/linearLayout"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp">
+            <fragment
+                android:id="@+id/placeOrigen"
+                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/posicionActual"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:src="@drawable/locationactual"
+
+                />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:id="@+id/linearLayout2"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+            <fragment
+                android:id="@+id/placeDestino"
+                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/fecha"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Fecha inicio del recorrido"
+            android:inputType="datetime"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:gravity="center"
+            android:layout_width="328dp"
+            android:layout_height="wrap_content"
+            android:text="Guardar Recorrido"
+            android:id="@+id/guardarRecorrido"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/iniciar" />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Iniciar Recorrido"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:id="@+id/iniciar"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/fecha"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+
+</ScrollView>

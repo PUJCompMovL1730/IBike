@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "116554323387",
+    "firebase_url": "https://proyectoibike.firebaseio.com",
+    "project_id": "proyectoibike",
+    "storage_bucket": "proyectoibike.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:116554323387:android:bd8435d217fe7c1f",
+        "android_client_info": {
+          "package_name": "co.edu.javeriana.proyectoibike"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "116554323387-jup8sar9408obo5l55hpsfurbakbboo9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.edu.javeriana.proyectoibike",
+            "certificate_hash": "0f1f24ef7e343b94d74ca0cc563aaa42fc8218cc"
+          }
+        },
+        {
+          "client_id": "116554323387-mr81n0a2deloj7tobfac4iat3jc6hmcb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMMAqYqfA8cNWnWMnPGipJ-1oafcKVPIY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "116554323387-mr81n0a2deloj7tobfac4iat3jc6hmcb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

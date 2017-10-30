@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/drawer"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="co.edu.javeriana.proyectoibike.ActivityMenu">
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="co.edu.javeriana.proyectoibike.Mensajes">
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/nom"
+        android:textSize="30dp"
+        android:layout_margin="20dp"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        />
+
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/list_of_messages"
+        android:layout_below="@+id/nom"
+        android:layout_above="@+id/men"/>
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/men"
+        android:layout_above="@+id/enviar"
+        android:layout_margin="10dp"
+        android:hint="Escribir Mensaje"
+        android:imeOptions="actionDone"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enviar"
+        android:id="@+id/enviar"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"/>
+
+
+
+</RelativeLayout>
+
+<android.support.design.widget.NavigationView
+    android:id="@+id/nav_view"
+    app:headerLayout="@layout/activity_header"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    app:itemTextColor="@color/darkgray"
+    app:itemIconTint="@color/darkgray"
+    app:menu="@menu/drawermenu"
+    android:layout_gravity="start">
+
+</android.support.design.widget.NavigationView>
+
+</android.support.v4.widget.DrawerLayout>
