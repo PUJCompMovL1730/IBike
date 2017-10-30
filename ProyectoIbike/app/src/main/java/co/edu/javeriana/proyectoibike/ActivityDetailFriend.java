@@ -132,6 +132,61 @@ public class ActivityDetailFriend extends AppCompatActivity implements  Navigati
                                 filePath.putFile(uri);
                                 myRef = database.getReference("users/" + key);
                                 myRef.setValue(user);
+                                agregarAmigo(llave);
+                                //startActivity(new Intent(ActivityDetailFriend.this, ActivityPerfil.class));
+                            } else {
+                            }
+                        }
+                    });
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void agregarAmigo(final String llave){
+        final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        Toast.makeText(this, "" + currentFirebaseUser.getUid(), Toast.LENGTH_SHORT).show();
+
+
+        myRef = database.getReference("users/");
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Usuarios myUser = dataSnapshot.child(llave).getValue(Usuarios.class);
+
+                String nombre = myUser.getNombre();
+                String apellido = myUser.getApellido();
+                final String key = myUser.getId();
+                String correo = myUser.getCorreo();
+                String equipo = myUser.getEquipo();
+                List<String> listaAmigos = myUser.getListaAmigos();
+                List<String> rutas = myUser.getRutas();
+
+                listaAmigos.add(currentFirebaseUser.getUid());
+                final Usuarios user = new Usuarios(nombre, apellido, key, correo, listaAmigos, equipo, rutas);
+
+                final File localFile;
+                try {
+                    localFile = File.createTempFile("images", "png");
+                    StorageReference imagesStorage = mStorage.child("Fotos").child(llave);
+                    imagesStorage.getFile(localFile).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                Uri uri = Uri.fromFile(localFile);
+                                filePath = mStorage.child("Fotos").child(llave);
+                                filePath.putFile(uri);
+                                myRef = database.getReference("users/" + key);
+                                myRef.setValue(user);
 
                                 startActivity(new Intent(ActivityDetailFriend.this, ActivityPerfil.class));
                             } else {

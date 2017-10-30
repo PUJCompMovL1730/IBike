@@ -9,20 +9,21 @@
     <ImageView
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:src="@drawable/perfil"/>
+        android:src="@drawable/logo"/>
     <TextView
         android:id="@+id/nombreUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:textStyle="bold"
+        android:text="ibike "
         android:layout_marginTop="5dp"/>
 
     <TextView
         android:id="@+id/correoUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:text="ekibi Studios"
         android:textColor="@color/white"
         android:textStyle="bold"/>
 

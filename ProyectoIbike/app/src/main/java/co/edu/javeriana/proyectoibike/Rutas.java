@@ -23,6 +23,9 @@ public class Rutas {
     private List<String> usuariosRuta = new ArrayList<>();
     private String clima;
 
+
+
+
     public Rutas() {
     }
 

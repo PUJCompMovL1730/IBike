@@ -27,7 +27,7 @@
         <activity android:name=".ActivityPerfil" />
         <activity android:name=".ActivityEditProfile" />
         <activity android:name=".Conversaciones" />
-        <activity android:name=".CrearRuta"/>
+        <activity android:name=".CrearRuta" />
         <activity android:name=".Mensajes" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -46,7 +46,8 @@
             android:label="@string/title_activity_maps" />
         <activity android:name=".ActivityAmigos" />
         <activity android:name=".ActivityDetailFriend" />
-        <activity android:name=".UserFriends"></activity>
+        <activity android:name=".UserFriends" />
+        <activity android:name=".ActivityNoticias"></activity>
     </application>
 
 </manifest>

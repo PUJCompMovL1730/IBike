@@ -191,7 +191,7 @@ public class ActivityPerfil extends AppCompatActivity implements  NavigationView
                 break;
             }
             case R.id.noticias: {
-                //logout();
+                startActivity(new Intent(ActivityPerfil.this, ActivityNoticias.class));
                 break;
             }
             case R.id.estadisticas: {
