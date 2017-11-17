@@ -130,7 +130,7 @@ public class Mensajes extends AppCompatActivity implements  NavigationView.OnNav
                         }
                     }
 
-                    adapter = new ArrayAdapter<Mensaje>(getApplicationContext(),android.R.layout.simple_list_item_1,mens);
+                    adapter = new ArrayAdapter<Mensaje>(Mensajes.this,android.R.layout.simple_list_item_1,mens);
 
                     ls.setAdapter(adapter);
                     ls.setSelection(adapter.getCount() - 1);

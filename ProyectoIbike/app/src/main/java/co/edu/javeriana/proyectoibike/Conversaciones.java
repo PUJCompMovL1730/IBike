@@ -100,7 +100,7 @@ public class Conversaciones extends AppCompatActivity implements  NavigationView
                         mens2.add(m);
                     }
 
-                    adapter = new ArrayAdapter<Usuarios>(getApplicationContext(),android.R.layout.simple_list_item_1,mens2);
+                    adapter = new ArrayAdapter<Usuarios>(Conversaciones.this,android.R.layout.simple_list_item_1,mens2);
 
 
                     ls.setAdapter(adapter);

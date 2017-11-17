@@ -128,6 +128,28 @@ public class ActivityEditProfile extends AppCompatActivity implements Navigation
         });
 
         cargarImg();
+        //mNombreUsuario =
+
+                myRef = database.getReference("users/");
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Usuarios myUser = dataSnapshot.child(currentFirebaseUser.getUid()).getValue(Usuarios.class);
+
+                mNombreUsuario.setHint(myUser.getNombre());
+                mApellidoUsuario.setHint(myUser.getApellido());
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.w("ss", "error en la consulta", databaseError.toException());
+            }
+        });
+
 
     }
 
@@ -286,7 +308,7 @@ public class ActivityEditProfile extends AppCompatActivity implements Navigation
 
 
         final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        Toast.makeText(this, "" + currentFirebaseUser.getUid(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Actualizado", Toast.LENGTH_SHORT).show();
 
 
         myRef = database.getReference("users/");
