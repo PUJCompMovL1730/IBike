@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -36,9 +38,13 @@ public class ActivityAmigos extends AppCompatActivity implements  NavigationView
     private ListView lista;
     private String friendKey;
     Usuarios myUser = new Usuarios();
+    public EditText b;
+    public Button buscar;
     private List<String> friends = new ArrayList<String>();
     private Vector<String> llavesFriends = new Vector<String>();
     private Vector<String> nombresFriend = new Vector<String>();
+    private Vector<String> results = new Vector<String>();
+    private Vector<String> llavesresults = new Vector<String>();
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -52,8 +58,14 @@ public class ActivityAmigos extends AppCompatActivity implements  NavigationView
         mAuth = FirebaseAuth.getInstance();
         database= FirebaseDatabase.getInstance();
 
-        lista = (ListView) findViewById(R.id.myFriends);
 
+        lista = (ListView) findViewById(R.id.myFriends);
+        b=(EditText)findViewById(R.id.buscar);
+        buscar=(Button)findViewById(R.id.buscarbtn);
+
+
+        results=new Vector<String>();
+        llavesresults=new Vector<String>();
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
@@ -67,6 +79,28 @@ public class ActivityAmigos extends AppCompatActivity implements  NavigationView
         }
 
         myRef = database.getReference("users/");
+
+        buscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int cont=0;
+                results.clear();
+                llavesresults.clear();
+                if(!b.getText().toString().equals("")&&!b.getText().toString().equals(" "))
+                for (String res:nombresFriend) {
+                    if (res.toLowerCase().contains(b.getText().toString().toLowerCase())){
+                        results.add(res);
+                        llavesresults.add(llavesFriends.get(cont));
+                    }
+                    cont++;
+                }else{
+                    b.setError("Requerido.");
+                }
+                ArrayAdapter arrayAdapter = new ArrayAdapter(ActivityAmigos.this, android.R.layout.simple_list_item_1,results);
+                lista.setAdapter(arrayAdapter);
+            }
+
+        });
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -89,8 +123,7 @@ public class ActivityAmigos extends AppCompatActivity implements  NavigationView
                     }
 
                 }
-                ArrayAdapter arrayAdapter = new ArrayAdapter(ActivityAmigos.this, android.R.layout.simple_list_item_1,nombresFriend);
-                lista.setAdapter(arrayAdapter);
+                //aquì
 
             }
 
@@ -106,7 +139,7 @@ public class ActivityAmigos extends AppCompatActivity implements  NavigationView
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getBaseContext(), ActivityDetailFriend.class);
-                String aux = llavesFriends.get(position);
+                String aux = llavesresults.get(position);
                 intent.putExtra("llave",aux);
                 Log.i("llave a mandar",aux);
                  startActivity(intent);
