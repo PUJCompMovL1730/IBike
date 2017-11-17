@@ -42,6 +42,7 @@ public class Mensajes extends AppCompatActivity implements  NavigationView.OnNav
 
     public List<Mensaje> mens;
     public ValueEventListener recibidor;
+    public Bundle bundle;
     FirebaseDatabase database;
     DatabaseReference myRef;
     public static final String PATH_MESSAGES="messages/";
@@ -83,7 +84,9 @@ public class Mensajes extends AppCompatActivity implements  NavigationView.OnNav
         //ls.setAdapter(adapter);
 
         t=(TextView)findViewById(R.id.nom);
-        t.setText(getIntent().getStringExtra("nombre"));
+        bundle=getIntent().getBundleExtra("bundle");
+        String s=bundle.get("nombre").toString();
+        t.setText(s);
 
         b=(Button)findViewById(R.id.enviar);
         m=(EditText)findViewById(R.id.men);
@@ -95,8 +98,8 @@ public class Mensajes extends AppCompatActivity implements  NavigationView.OnNav
 
 
                 myRef.push().setValue(new Mensaje(FirebaseAuth.getInstance()
-                                        .getCurrentUser()
-                                        .getEmail(), m.getText().toString(), getIntent().getStringExtra("nombre"))
+                                .getCurrentUser()
+                                .getEmail(), m.getText().toString(), bundle.get("correo").toString())
 
                         );
 
@@ -122,7 +125,7 @@ public class Mensajes extends AppCompatActivity implements  NavigationView.OnNav
 
                     if(!valido(men)&&men.getDestino()!=null&&men.getRemitente()!=null) {
 
-                        if(((men.getDestino().equals(getIntent().getStringExtra("nombre")))&&(men.getRemitente().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())))||((men.getRemitente().equals(getIntent().getStringExtra("nombre")))&&(men.getDestino().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())))) {
+                        if(((men.getDestino().equals(bundle.get("correo").toString()))&&(men.getRemitente().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())))||((men.getRemitente().equals(bundle.get("correo").toString()))&&(men.getDestino().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())))) {
                             mens.add(men);
                         }
                     }
@@ -155,7 +158,7 @@ public class Mensajes extends AppCompatActivity implements  NavigationView.OnNav
     public boolean valido(Mensaje men){
         for (Mensaje m:mens) {
             if(men.getFecha()==m.getFecha()&&m.getTexto().equals(men.getTexto())){
-                Log.i("Tag",men.getDestino()+"=="+getIntent().getStringExtra("nombre"));
+                //Log.i("Tag",men.getDestino()+"=="+getIntent().getStringExtra("nombre"));
               return true;
             }
         }

@@ -16,6 +16,7 @@ public class Mensaje {
     public String texto;
 
     public Mensaje(String remitente, String texto, String destino) {
+
         this.remitente = remitente;
         this.destino= destino;
         this.texto = texto;
@@ -56,6 +57,9 @@ public class Mensaje {
     public void setTexto(String texto) {
         this.texto = texto;
     }
+
+
+
 
     @Override
     public String toString() {

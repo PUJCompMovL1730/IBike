@@ -30,7 +30,7 @@ public class Conversaciones extends AppCompatActivity implements  NavigationView
     public ValueEventListener recibidor;
     public ArrayAdapter adapter;
     public List<String> mens;
-    public List<String> mens2;
+    public List<Usuarios> mens2;
     FirebaseDatabase database;
     DatabaseReference myRef;
     public static final String PATH_USERS="users/";
@@ -65,7 +65,10 @@ public class Conversaciones extends AppCompatActivity implements  NavigationView
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getBaseContext(), Mensajes.class);
-                intent.putExtra("nombre", mens2.get(position));
+                Bundle bundle= new Bundle();
+                bundle.putString("nombre", mens2.get(position).getNombre() +" "+ mens2.get(position).getApellido() );
+                bundle.putString("correo",mens2.get(position).getCorreo());
+                intent.putExtra("bundle", bundle);
                 startActivity(intent);
             }
         });
@@ -86,7 +89,7 @@ public class Conversaciones extends AppCompatActivity implements  NavigationView
                     Log.i("zzz", "Encontró conversación: " + men);
 
                     mens=new ArrayList<String>();
-                    mens2=new ArrayList<String>();
+                    mens2=new ArrayList<Usuarios>();
 
                     for (String a:men.getListaAmigos()) {
                         mens.add(a);
@@ -94,10 +97,10 @@ public class Conversaciones extends AppCompatActivity implements  NavigationView
 
                     for (String s:mens) {
                         Usuarios m = dataSnapshot.child(s).getValue(Usuarios.class);
-                        mens2.add(m.getCorreo());
+                        mens2.add(m);
                     }
 
-                    adapter = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1,mens2);
+                    adapter = new ArrayAdapter<Usuarios>(getApplicationContext(),android.R.layout.simple_list_item_1,mens2);
 
 
                     ls.setAdapter(adapter);
