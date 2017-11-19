@@ -67,6 +67,8 @@ public class CrearRuta extends AppCompatActivity {
     public static final String PATH_RUTES = "rutes/";
     ProgressDialog mProgressDialog;
     ArrayList<HashMap<String, String>> arraylist;
+    public Clima clima;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -348,26 +350,24 @@ public class CrearRuta extends AppCompatActivity {
             // Create the array
             arraylist = new ArrayList<HashMap<String, String>>();
             // YQL JSON URL
-            String url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20%3D%20368148&format=json&diagnostics=true&callback=";
+            String url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20%3D%20368148%20%20and%20u%3D'c'&format=json&diagnostics=true&callback=";
 
             try {
                 // Retrive JSON Objects from the given URL in JSONfunctions.class
                 JSONObject json_data = getJSONfromURL(url);
                 JSONObject json_query = json_data.getJSONObject("query");
                 JSONObject json_results = json_query.getJSONObject("results");
-                JSONObject json_json_result = json_results.getJSONObject("json");
-                JSONArray json_result = json_json_result.getJSONArray("items");
+                JSONObject chan = json_results.getJSONObject("channel");
+                JSONObject wind = chan.getJSONObject("wind");
+                JSONObject atmosphere = chan.getJSONObject("atmosphere");
+                JSONObject condition = chan.getJSONObject("item").getJSONObject("condition");
 
-                for (int i = 0; i < json_result.length(); i++) {
-                    HashMap<String, String> map = new HashMap<String, String>();
-                    JSONObject c = json_result.getJSONObject(i);
-                    JSONObject vo = c.getJSONObject("volumeInfo");
-                    map.put("title", vo.optString("title"));
-                    map.put("description", vo.optString("description"));
-                    JSONObject il = vo.getJSONObject("imageLinks");
-                    map.put("thumbnail", il.optString("thumbnail"));
-                    arraylist.add(map);
-                }
+
+
+
+                    //map.put("thumbnail", il.optString("thumbnail"));
+                    //arraylist.add(map);
+
 
             } catch (JSONException e) {
                 Log.e("Error", e.getMessage());
