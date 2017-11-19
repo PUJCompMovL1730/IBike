@@ -121,12 +121,14 @@ public class CrearRuta extends AppCompatActivity {
                             usuariosRuta.add(idUser);
                             List<String> rutasDelUsuario = new ArrayList<String>();
                             rutasDelUsuario = usuario.getRutas();
-                            recorrido.setOrigen(locacionOrigen);
-                            recorrido.setDestino(locacionDestino);
+                            recorrido.setLatitudOrigen(locacionOrigen.latitude);
+                            recorrido.setLongitudOrigen(locacionOrigen.longitude);
+                            recorrido.setLatitudDestino(locacionDestino.latitude);
+                            recorrido.setLongitudDestino(locacionDestino.longitude);
+                            recorrido.setIdReporte("clima");
                             double distancia = distance(locacionOrigen.latitude, locacionOrigen.longitude, locacionDestino.latitude, locacionDestino.longitude);
                             recorrido.setKilometros(distancia);
                             recorrido.setRealizado(false);
-                            recorrido.setClima("Calido");
                             recorrido.setFecha(fecha.getText().toString());
                             String key2 = myRef.push().getKey();
                             recorrido.setIdRuta(key2);
@@ -140,8 +142,8 @@ public class CrearRuta extends AppCompatActivity {
                             Intent intent = new Intent(getApplicationContext(),ActivityMaps.class);
                             startActivity(intent);
                         }else {
-                            String email = fecha.getText().toString();
-                            if (TextUtils.isEmpty(email)) {
+                            String fechaR = fecha.getText().toString();
+                            if (TextUtils.isEmpty(fechaR)) {
                                 fecha.setError("Requerido.");
                             } else {
                                 fecha.setError(null);
@@ -184,12 +186,14 @@ public class CrearRuta extends AppCompatActivity {
                         usuariosRuta.add(idUser);
                         List<String> rutasDelUsuario = new ArrayList<String>();
                         rutasDelUsuario = usuario.getRutas();
-                        recorrido.setOrigen(locacionOrigen);
-                        recorrido.setDestino(locacionDestino);
                         double distancia = distance(locacionOrigen.latitude, locacionOrigen.longitude, locacionDestino.latitude, locacionDestino.longitude);
                         recorrido.setKilometros(distancia);
                         recorrido.setRealizado(false);
-                        recorrido.setClima("Calido");
+                        recorrido.setLatitudOrigen(locacionOrigen.latitude);
+                        recorrido.setLongitudOrigen(locacionOrigen.longitude);
+                        recorrido.setLatitudDestino(locacionDestino.latitude);
+                        recorrido.setLongitudDestino(locacionDestino.longitude);
+                        recorrido.setIdReporte("clima");
                         Calendar calendar = new GregorianCalendar();
                         Date fechaActual = calendar.getTime();
                         recorrido.setFecha(fechaActual.toString());

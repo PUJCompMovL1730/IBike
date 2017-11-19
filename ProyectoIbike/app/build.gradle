@@ -26,6 +26,7 @@ dependencies {
     })
 
     compile 'com.google.android.gms:play-services-location:11.0.4'
+    compile 'com.google.android.gms:play-services-location:11.0.4'
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.firebase:firebase-auth:11.0.4'
@@ -33,11 +34,11 @@ dependencies {
     compile 'com.google.firebase:firebase-storage:11.0.4'
     compile 'com.android.support:design:26.1.0'
     compile 'com.google.android.gms:play-services-places:11.0.4'
-    compile 'com.google.android.gms:play-services-location:11.0.4'
     compile 'com.google.android.gms:play-services-maps:11.0.4'
     compile 'com.github.jd-alexander:library:1.1.0'
     testCompile 'junit:junit:4.12'
 }
+
 
 
 

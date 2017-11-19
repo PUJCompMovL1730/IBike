@@ -3,6 +3,7 @@
     <string name="open">Abrir</string>
     <string name="close">Cerrar</string>
     <string name="title_activity_maps">iBike</string>
+    <string name="title_activity_maps_e">Map</string>
 
 
 </resources>

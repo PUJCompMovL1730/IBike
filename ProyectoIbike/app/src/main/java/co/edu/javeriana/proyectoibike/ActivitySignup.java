@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,10 +45,7 @@ import java.util.regex.Pattern;
 
 public class ActivitySignup extends AppCompatActivity {
 
-    //Variables Firebase
-    //Variables FireBase Autenticación
     private FirebaseAuth mAuth;
-
     private FirebaseDatabase database;
     private DatabaseReference myRef;
 
@@ -56,6 +55,9 @@ public class ActivitySignup extends AppCompatActivity {
     private EditText mNombreUsuario;
     private EditText mApellidoUsuario;
     private Button btnRegistro;
+    private EditText empresa;
+    private RadioGroup rGroup;
+    private RadioButton checkedRadioButton;
     private TextView mRegistro;
     private ImageButton imagenPerfil;
 
@@ -68,7 +70,9 @@ public class ActivitySignup extends AppCompatActivity {
     public static final int MY_PERMISSIONS_REQUEST_IMAGE_PICKER = 2;
     private Intent cameraIntent;
     private Intent galleryIntent;
-
+    private Usuarios usuario;
+    private Empresario usuarioEmpresario;
+    private String nombre, apellido, correoE, contra, nombreEmpresa;
     private Uri imageURI;
     private StorageReference mStorage;
             StorageReference filePath;
@@ -91,6 +95,10 @@ public class ActivitySignup extends AppCompatActivity {
         btnRegistro = (Button) findViewById(R.id.btnRegistro);
         mRegistro = (TextView) findViewById(R.id.mRegistro);
         imagenPerfil = (ImageButton) findViewById(R.id.imagenPerfil);
+        rGroup = (RadioGroup)findViewById(R.id.radioGroup);
+        checkedRadioButton = (RadioButton)rGroup.findViewById(R.id.nosi);
+        empresa = (EditText) findViewById(R.id.empresa);
+
 
         progressDialog = new ProgressDialog(this);
 
@@ -117,11 +125,22 @@ public class ActivitySignup extends AppCompatActivity {
             }
         });
 
+
+        rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
+                boolean isChecked = checkedRadioButton.isChecked();
+                if (!isChecked){
+                    empresa.setVisibility(View.VISIBLE);
+                }else{
+                    empresa.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
     }
 
-    private String changeString(String s){
-        return s ;
-    }
 
     private void seleccionarGaleria() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -164,11 +183,6 @@ public class ActivitySignup extends AppCompatActivity {
                     imagenPerfil.setImageBitmap(selectedImage);
 
 
-
-
-
-
-
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -176,101 +190,97 @@ public class ActivitySignup extends AppCompatActivity {
         }
     }
 
-
-
-
-
-
-
-    private boolean validateForm() {
+    private boolean validateForm(String nombre, String apellido, String correoE, String contra,  String nombreEmpresa) {
         boolean valid = true;
-        String email = mUser.getText().toString();
-        if (TextUtils.isEmpty(email)) {
-            mUser.setError("Requerido.");
-            valid = false;
-        } else {
-            mUser.setError(null);
-        }
-        String password = mPassword.getText().toString();
-        if (TextUtils.isEmpty(password)) {
-            mPassword.setError("Requerido.");
-            valid = false;
-        } else {
-            mPassword.setError(null);
-        }
-        String Nombre = mNombreUsuario.getText().toString();
-        if (TextUtils.isEmpty(Nombre)) {
-            mNombreUsuario.setError("Requerido.");
+        if (TextUtils.isEmpty(nombre)) {
+            mNombreUsuario.setError("Required.");
             valid = false;
         } else {
             mNombreUsuario.setError(null);
         }
-        String Apellido = mApellidoUsuario.getText().toString();
-        if (TextUtils.isEmpty(Apellido)) {
-            mApellidoUsuario.setError("Requerido.");
+        if (TextUtils.isEmpty(apellido)) {
+            mApellidoUsuario.setError("Required.");
             valid = false;
         } else {
             mApellidoUsuario.setError(null);
         }
+        if (TextUtils.isEmpty(correoE)) {
+            mUser.setError("Required.");
+            valid = false;
+        } else {
+            mUser.setError(null);
+        }
+        if (TextUtils.isEmpty(contra)) {
+            mPassword.setError("Required.");
+            valid = false;
+        } else {
+            mPassword.setError(null);
+        }
+        if(TextUtils.isEmpty(nombreEmpresa) && !checkedRadioButton.isChecked()){
+            empresa.setError("Required.");
+            valid = false;
+        }else {
+            empresa.setError(null);
+        }
         return valid;
+
     }
 
 
     private void registerUser() {
-        if (validateForm()) {
-            //getting email and password from edit texts
-            final String email = mUser.getText().toString().trim();
-            if(isEmailValid(email)){
-                String password = mPassword.getText().toString().trim();
-                final String nombre = mNombreUsuario.getText().toString().trim();
-                final String apellido = mApellidoUsuario.getText().toString().trim();
-
-
-                //if the email and password are not empty
-                //displaying a progress dialog
-
+        nombre = mNombreUsuario.getText().toString();
+        apellido = mApellidoUsuario.getText().toString();
+        correoE = mUser.getText().toString();
+        contra = mPassword.getText().toString();
+        nombreEmpresa = empresa.getText().toString();
+        if (validateForm(nombre, apellido, correoE, contra, nombreEmpresa)) {
+            if(isEmailValid(correoE)){
                 progressDialog.setMessage("Registrando, Un momento por favor");
                 progressDialog.show();
 
-                //creating a new user
-                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                mAuth.createUserWithEmailAndPassword(correoE, contra).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        //checking if success
                         if (task.isSuccessful()) {
 
                             myRef = FirebaseDatabase.getInstance().getReference();
+                            if(checkedRadioButton.isChecked()){
+                                List<String> listaAmigos = new ArrayList<>();
+                                List<String> rutas = new ArrayList<>();
+                                String key=mAuth.getCurrentUser().getUid();
+                                usuario = new Usuarios();
+                                usuario.setNombre(nombre);
+                                usuario.setApellido(apellido);
+                                usuario.setCorreo(correoE);
+                                usuario.setListaAmigos(listaAmigos);
+                                usuario.setRutas(rutas);
+                                usuario.setId(key);
+                                usuario.setEquipo("rojo");
+                                usuario.setMultiplicador(1);
+                                usuario.setPuntuacion(0);
+                                filePath = mStorage.child("Fotos").child(mAuth.getCurrentUser().getUid());
+                                filePath.putFile(imageURI);
+                                myRef=database.getReference("users/"+key);
+                                myRef.setValue(usuario);
+                                startActivity(new Intent(ActivitySignup.this, ActivityMaps.class));
+                            }else {
+                                List<String> idEventos = new ArrayList<String>();
+                                List<String> idMarcadores = new ArrayList<String>();
+                                String key=mAuth.getCurrentUser().getUid();
+                                usuarioEmpresario.setId(key);
+                                usuarioEmpresario.setNombre(nombre);
+                                usuarioEmpresario.setApellido(apellido);
+                                usuarioEmpresario.setEstado(true);
+                                usuarioEmpresario.setIdEventos(idEventos);
+                                usuarioEmpresario.setIdMarcadores(idMarcadores);
+                                myRef=database.getReference("usersE/"+key);
+                                myRef.setValue(usuarioEmpresario);
+                                Intent intent = new Intent(ActivitySignup.this, ActivityMapsE.class);
+                                startActivity(intent);
+                            }
 
-                            //Toast.makeText(ActivitySignup.this, "pglo"+PathFoto, Toast.LENGTH_SHORT).show();
 
-
-
-
-                            List<String> listaAmigos = new ArrayList<>();
-                            List<String> rutas = new ArrayList<>();
-                            String key=mAuth.getCurrentUser().getUid();
-
-                            Usuarios user = new Usuarios(nombre,apellido,key,email, listaAmigos,"Default",rutas);
-
-
-                            filePath = mStorage.child("Fotos").child(mAuth.getCurrentUser().getUid());
-                            filePath.putFile(imageURI);
-                            myRef=database.getReference("users/"+key);
-                            myRef.setValue(user);
-
-                            //myRef.child("users").child(key).setValue(user);
-
-                        /*DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("users");
-                        DatabaseReference currentUserDB = mDatabase.child(mAuth.getCurrentUser().getUid());
-                        currentUserDB.child("Nombre").setValue(nombre);
-                        currentUserDB.child("Apellido").setValue(apellido);
-                        currentUserDB.child("Correo").setValue(email);
-                        currentUserDB.child("Photo").setValue("Default");*/
-                            //display some message here
-                            //Toast.makeText(Main3Activity.this,"Successfully registered",Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(ActivitySignup.this, ActivityMaps.class));
                         } else {
-                            //display some message here
                             Toast.makeText(ActivitySignup.this, "Registration Error", Toast.LENGTH_LONG).show();
                         }
                         progressDialog.dismiss();

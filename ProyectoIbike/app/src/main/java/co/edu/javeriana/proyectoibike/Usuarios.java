@@ -19,7 +19,8 @@ public class Usuarios {
     private List<String> listaAmigos = new ArrayList<>();
     private String Equipo;
     private List<String> rutas = new ArrayList<>();
-    private LatLng posActual;
+    private double puntuacion;
+    private int multiplicador;
 
     public List<String> getListaAmigos() {
         return listaAmigos;
@@ -41,18 +42,17 @@ public class Usuarios {
         return rutas;
     }
 
+    public double getPuntuacion() {
+        return puntuacion;
+    }
+
+    public void setPuntuacion(double puntuacion) {
+        this.puntuacion = puntuacion;
+    }
+
     public void setRutas(List<String> rutas) {
         this.rutas = rutas;
     }
-
-    public LatLng getPosActual() {
-        return posActual;
-    }
-
-    public void setPosActual(LatLng posActual) {
-        this.posActual = posActual;
-    }
-
 
 
     public Usuarios(String nombre, String apellido, String id, String correo, List<String> listaAmigos, String equipo, List<String> rutas) {
@@ -66,6 +66,14 @@ public class Usuarios {
     }
 
     public Usuarios() {
+    }
+
+    public int getMultiplicador() {
+        return multiplicador;
+    }
+
+    public void setMultiplicador(int multiplicador) {
+        this.multiplicador = multiplicador;
     }
 
     public String getNombre() {

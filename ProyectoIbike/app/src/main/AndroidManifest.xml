@@ -47,7 +47,10 @@
         <activity android:name=".ActivityAmigos" />
         <activity android:name=".ActivityDetailFriend" />
         <activity android:name=".UserFriends" />
-        <activity android:name=".ActivityNoticias"></activity>
+        <activity android:name=".ActivityNoticias" />
+        <activity
+            android:name=".ActivityMapsE"
+            android:label="@string/title_activity_maps_e"></activity>
     </application>
 
 </manifest>

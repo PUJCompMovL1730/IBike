@@ -120,9 +120,9 @@ public class ActivityNoticias extends AppCompatActivity implements  NavigationVi
 
 
                         String fecha = ruta.getFecha();
-                        LatLng origen = new LatLng(ruta.getOrigen().latitude, ruta.getOrigen().longitude) ;
-                        LatLng destino = ruta.getDestino();
-                        String clima = ruta.getClima();
+                        LatLng origen = new LatLng(ruta.getLatitudOrigen(), ruta.getLongitudOrigen()) ;
+                        LatLng destino = new LatLng(ruta.getLatitudDestino(), ruta.getLongitudDestino());
+                        String clima = ruta.getIdReporte();
                         boolean realizado = ruta.isRealizado();
 
                         String noticion = "Fecha: " + fecha + "\n" + " El clima pronosticado es: " + clima + "\n" + "Desde: " + origen.toString() + " Hasta: " + destino.toString();

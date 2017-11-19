@@ -16,7 +16,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="56dp"
+        android:paddingTop="16dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
         >
@@ -24,8 +24,8 @@
         <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="vertical"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:background="@color/white"
             android:layout_gravity="center">
 
@@ -61,22 +61,76 @@
             android:layout_height="wrap_content"
             android:hint="Apellido"
             android:inputType="textPersonName"
-            android:paddingTop="20dp"/>
+            android:paddingTop="15dp"/>
         <EditText
             android:id="@+id/mUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Correo"
             android:inputType="textEmailAddress"
-            android:paddingTop="20dp"/>
+            android:paddingTop="15dp"/>
         <EditText
             android:id="@+id/mPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
             android:inputType="textPassword"
-            android:paddingTop="20dp"
+            android:paddingTop="15dp"
             />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="¿Es usted usuario empresarial?"
+            android:layout_margin="6dp"
+            android:layout_marginEnd="8dp" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:orientation="horizontal"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="6dp"
+            android:id="@+id/radioGroup"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp">
+
+
+
+            <RadioButton
+                android:id="@+id/sino"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:paddingLeft="10dp"
+                android:text="SI" />
+
+            <RadioButton
+                android:id="@+id/nosi"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:checked="true"
+                android:paddingLeft="10dp"
+                android:text="NO" />
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/empresa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="Empresa a la que pertenece"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+
+            android:visibility="invisible"/>
 
         <Button
             android:id="@+id/btnRegistro"
@@ -101,7 +155,7 @@
                 android:layout_gravity="bottom"
                 android:layout_alignParentBottom="true"
                 android:textSize="16dip"
-                android:paddingBottom="20dp"/>
+                android:paddingBottom="10dp"/>
 
 
 

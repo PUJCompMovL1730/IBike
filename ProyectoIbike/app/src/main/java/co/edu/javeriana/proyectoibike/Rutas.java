@@ -14,19 +14,69 @@ public class Rutas {
 
 
     private String idRuta;
-    private LatLng destino;
-    private String duracion;
+    private double latitudDestino;
+    private double longitudDestino;
+    private double longitudOrigen;
+    private double latitudOrigen;
     private String fecha;
     private double kilometros;
-    private LatLng origen;
     private boolean realizado;
+    private boolean validaDominio;
     private List<String> usuariosRuta = new ArrayList<>();
-    private String clima;
+    private String idReporte;
 
 
 
 
     public Rutas() {
+    }
+
+    public boolean isValidaDominio() {
+        return validaDominio;
+    }
+
+    public void setValidaDominio(boolean validaDominio) {
+        this.validaDominio = validaDominio;
+    }
+
+    public String getIdReporte() {
+        return idReporte;
+    }
+
+    public void setIdReporte(String idReporte) {
+        this.idReporte = idReporte;
+    }
+
+    public double getLatitudDestino() {
+        return latitudDestino;
+    }
+
+    public void setLatitudDestino(double latitudDestino) {
+        this.latitudDestino = latitudDestino;
+    }
+
+    public double getLongitudDestino() {
+        return longitudDestino;
+    }
+
+    public void setLongitudDestino(double longitudDestino) {
+        this.longitudDestino = longitudDestino;
+    }
+
+    public double getLongitudOrigen() {
+        return longitudOrigen;
+    }
+
+    public void setLongitudOrigen(double longitudOrigen) {
+        this.longitudOrigen = longitudOrigen;
+    }
+
+    public double getLatitudOrigen() {
+        return latitudOrigen;
+    }
+
+    public void setLatitudOrigen(double latitudOrigen) {
+        this.latitudOrigen = latitudOrigen;
     }
 
     public String getIdRuta() {
@@ -37,21 +87,6 @@ public class Rutas {
         this.idRuta = idCreador;
     }
 
-    public LatLng getDestino() {
-        return destino;
-    }
-
-    public void setDestino(LatLng destino) {
-        this.destino = destino;
-    }
-
-    public String getDuracion() {
-        return duracion;
-    }
-
-    public void setDuracion(String duracion) {
-        this.duracion = duracion;
-    }
 
     public String getFecha() {
         return fecha;
@@ -67,14 +102,6 @@ public class Rutas {
 
     public void setKilometros(double kilometros) {
         this.kilometros = kilometros;
-    }
-
-    public LatLng getOrigen() {
-        return origen;
-    }
-
-    public void setOrigen(LatLng origen) {
-        this.origen = origen;
     }
 
     public boolean isRealizado() {
@@ -93,11 +120,4 @@ public class Rutas {
         this.usuariosRuta = usuariosRuta;
     }
 
-    public String getClima() {
-        return clima;
-    }
-
-    public void setClima(String clima) {
-        this.clima = clima;
-    }
 }
