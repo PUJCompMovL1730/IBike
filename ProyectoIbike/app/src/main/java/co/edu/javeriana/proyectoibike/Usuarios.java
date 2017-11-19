@@ -21,6 +21,15 @@ public class Usuarios {
     private List<String> rutas = new ArrayList<>();
     private double puntuacion;
     private int multiplicador;
+    private boolean empresario;
+
+    public boolean isEmpresario() {
+        return empresario;
+    }
+
+    public void setEmpresario(boolean empresario) {
+        this.empresario = empresario;
+    }
 
     public List<String> getListaAmigos() {
         return listaAmigos;

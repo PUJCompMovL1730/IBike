@@ -87,6 +87,7 @@ public class ActivitySignup extends AppCompatActivity {
         database= FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
         mStorage = FirebaseStorage.getInstance().getReference();
+        usuarioEmpresario = new Empresario();
 
         mUser = (EditText) findViewById(R.id.mUser);
         mPassword = (EditText) findViewById(R.id.mPassword);
@@ -255,6 +256,7 @@ public class ActivitySignup extends AppCompatActivity {
                                 usuario.setListaAmigos(listaAmigos);
                                 usuario.setRutas(rutas);
                                 usuario.setId(key);
+                                usuario.setEmpresario(false);
                                 usuario.setEquipo("rojo");
                                 usuario.setMultiplicador(1);
                                 usuario.setPuntuacion(0);
@@ -266,11 +268,11 @@ public class ActivitySignup extends AppCompatActivity {
                             }else {
                                 List<String> idEventos = new ArrayList<String>();
                                 List<String> idMarcadores = new ArrayList<String>();
-                                String key=mAuth.getCurrentUser().getUid();
+                                String key = mAuth.getCurrentUser().getUid();
                                 usuarioEmpresario.setId(key);
                                 usuarioEmpresario.setNombre(nombre);
                                 usuarioEmpresario.setApellido(apellido);
-                                usuarioEmpresario.setEstado(true);
+                                usuarioEmpresario.setEmpresario(true);
                                 usuarioEmpresario.setIdEventos(idEventos);
                                 usuarioEmpresario.setIdMarcadores(idMarcadores);
                                 myRef=database.getReference("usersE/"+key);

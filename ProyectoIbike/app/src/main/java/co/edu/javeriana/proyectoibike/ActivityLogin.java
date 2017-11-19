@@ -18,6 +18,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ActivityLogin extends AppCompatActivity {
 
@@ -30,23 +35,27 @@ public class ActivityLogin extends AppCompatActivity {
     private EditText mPassword;
     private TextView mRegistro;
     private Button btnIngresar;
-
-
+    private Usuarios usuario;
+    private Empresario empresa;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+    DatabaseReference myRefE;
+    private String PATH_USERS = "users/";
+    private String PATH_USERSE = "usersE/";
     private ProgressDialog mProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-
+        database = FirebaseDatabase.getInstance();
         mProgress = new ProgressDialog(this);
         mProgress.setTitle("Autenticando...");
         mProgress.setMessage("Por Favor Espere...");
         mProgress.setCancelable(false);
         mProgress.setIndeterminate(true);
-
-
+        usuario = new Usuarios();
+        empresa = new Empresario();
         mAuth = FirebaseAuth.getInstance();
 
         mUser = (EditText) findViewById(R.id.mUser);
@@ -59,9 +68,37 @@ public class ActivityLogin extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
-                    // User is signed in
-                    Log.d("ss", "onAuthStateChanged:signed_in:" + user.getUid());
-                    startActivity(new Intent(ActivityLogin.this, ActivityMaps.class));
+                    final String idUser = user.getUid();
+                    myRef = database.getReference(PATH_USERS);
+                    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            usuario =  dataSnapshot.child(idUser).getValue(Usuarios.class);
+                            Log.d("ss", "onAuthStateChanged:signed_in:" + idUser);
+                            startActivity(new Intent(ActivityLogin.this, ActivityMaps.class));
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                    final String idUserE = user.getUid();
+                    myRefE = database.getReference(PATH_USERSE);
+                    myRefE.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            empresa = dataSnapshot.child(idUserE).getValue(Empresario.class);
+                            Log.d("ss", "onAuthStateChanged:signed_in:" + idUser);
+                            startActivity(new Intent(ActivityLogin.this, ActivityMapsE.class));
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
                 } else {
                     // User is signed out
                     Log.d("ss", "onAuthStateChanged:signed_out");

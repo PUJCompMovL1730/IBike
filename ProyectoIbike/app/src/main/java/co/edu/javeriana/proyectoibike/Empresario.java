@@ -10,7 +10,7 @@ public class Empresario {
 
     private String nombre;
     private String apellido;
-    private boolean estado;
+    private boolean empresario;
     private String id;
     private List<String> idEventos;
     private List<String> idMarcadores;
@@ -42,12 +42,12 @@ public class Empresario {
         this.apellido = apellido;
     }
 
-    public boolean isEstado() {
-        return estado;
+    public boolean isEmpresario() {
+        return empresario;
     }
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
+    public void setEmpresario(boolean empresario) {
+        this.empresario = empresario;
     }
 
     public List<String> getIdEventos() {
