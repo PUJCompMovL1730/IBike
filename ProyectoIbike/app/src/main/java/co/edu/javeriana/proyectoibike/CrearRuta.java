@@ -1,7 +1,9 @@
 package co.edu.javeriana.proyectoibike;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -28,10 +30,23 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 
 public class CrearRuta extends AppCompatActivity {
@@ -50,6 +65,8 @@ public class CrearRuta extends AppCompatActivity {
     final	static	double	RADIUS_OF_EARTH_KM	=	6371;
     public static final String PATH_USERS = "users/";
     public static final String PATH_RUTES = "rutes/";
+    ProgressDialog mProgressDialog;
+    ArrayList<HashMap<String, String>> arraylist;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -269,4 +286,106 @@ public class CrearRuta extends AppCompatActivity {
         return	Math.round(result*100.0)/100.0;
     }
 
+    public static JSONObject getJSONfromURL(String url){
+        InputStream is = null;
+        String result = "";
+        JSONObject jArray = null;
+
+        // Download JSON data from URL
+        try{
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(url);
+            HttpResponse response = httpclient.execute(httppost);
+            HttpEntity entity = response.getEntity();
+            is = entity.getContent();
+
+        }catch(Exception e){
+            Log.e("log_tag", "Error in http connection "+e.toString());
+        }
+
+        // Convert response to string
+        try{
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+            is.close();
+            result=sb.toString();
+        }catch(Exception e){
+            Log.e("log_tag", "Error converting result "+e.toString());
+        }
+
+        try{
+
+            jArray = new JSONObject(result);
+        }catch(JSONException e){
+            Log.e("log_tag", "Error parsing data "+e.toString());
+        }
+
+        return jArray;
+    }
+    //Esto obtiene el clima.
+    private class DownloadJSON extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Create a progressdialog
+            mProgressDialog = new ProgressDialog(CrearRuta.this);
+            // Set progressdialog title
+            mProgressDialog.setTitle("Obteniendo Clima");
+            // Set progressdialog message
+            mProgressDialog.setMessage("Cargando...");
+            mProgressDialog.setIndeterminate(false);
+            // Show progressdialog
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            // Create the array
+            arraylist = new ArrayList<HashMap<String, String>>();
+            // YQL JSON URL
+            String url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20%3D%20368148&format=json&diagnostics=true&callback=";
+
+            try {
+                // Retrive JSON Objects from the given URL in JSONfunctions.class
+                JSONObject json_data = getJSONfromURL(url);
+                JSONObject json_query = json_data.getJSONObject("query");
+                JSONObject json_results = json_query.getJSONObject("results");
+                JSONObject json_json_result = json_results.getJSONObject("json");
+                JSONArray json_result = json_json_result.getJSONArray("items");
+
+                for (int i = 0; i < json_result.length(); i++) {
+                    HashMap<String, String> map = new HashMap<String, String>();
+                    JSONObject c = json_result.getJSONObject(i);
+                    JSONObject vo = c.getJSONObject("volumeInfo");
+                    map.put("title", vo.optString("title"));
+                    map.put("description", vo.optString("description"));
+                    JSONObject il = vo.getJSONObject("imageLinks");
+                    map.put("thumbnail", il.optString("thumbnail"));
+                    arraylist.add(map);
+                }
+
+            } catch (JSONException e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void args) {
+            // Locate the listview in listview_main.xml
+            //listview = (ListView) findViewById(R.id.listview);
+            // Pass the results into ListViewAdapter.java
+            //adapter = new ListViewAdapter(MainActivity.this, arraylist);
+            // Binds the Adapter to the ListView
+            //listview.setAdapter(adapter);
+            // Close the progressdialog
+            mProgressDialog.dismiss();
+        }
+    }
 }
