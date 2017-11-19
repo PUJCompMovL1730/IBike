@@ -48,7 +48,7 @@ public class ActivityAmigos extends AppCompatActivity implements  NavigationView
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
-
+//
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
