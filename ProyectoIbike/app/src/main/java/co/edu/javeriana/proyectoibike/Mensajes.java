@@ -109,8 +109,8 @@ public class Mensajes extends AppCompatActivity implements  NavigationView.OnNav
             }
 
         });
-
-
+        //
+        //
     }
 
     public void loadMessages() {
