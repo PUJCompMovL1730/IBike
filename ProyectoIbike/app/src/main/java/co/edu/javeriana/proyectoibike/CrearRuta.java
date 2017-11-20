@@ -63,7 +63,7 @@ public class CrearRuta extends AppCompatActivity {
     FBAuth autenticador;
     final	static	double	RADIUS_OF_EARTH_KM	=	6371;
     public static final String PATH_USERS = "users/";
-    public static final String PATH_RUTES = "rutes/";
+    public static final String PATH_RUTES = "rutas/";
     ProgressDialog mProgressDialog;
     public Clima clima;
 
@@ -91,7 +91,7 @@ public class CrearRuta extends AppCompatActivity {
 
             }
         });
-        PlaceAutocompleteFragment fragmentDestino = (PlaceAutocompleteFragment)
+        final PlaceAutocompleteFragment fragmentDestino = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.placeDestino);
         fragmentDestino.setHint("Destino");
         fragmentDestino.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -141,13 +141,20 @@ public class CrearRuta extends AppCompatActivity {
                             recorrido.setLongitudOrigen(locacionOrigen.longitude);
                             recorrido.setLatitudDestino(locacionDestino.latitude);
                             recorrido.setLongitudDestino(locacionDestino.longitude);
-                            recorrido.setIdReporte("clima");
+                            //recorrido.setIdReporte("clima");
                             double distancia = distance(locacionOrigen.latitude, locacionOrigen.longitude, locacionDestino.latitude, locacionDestino.longitude);
                             recorrido.setKilometros(distancia);
                             recorrido.setRealizado(false);
+                            recorrido.setProgramada(true);
+                            String key3= myRef.push().getKey();
+                            myRef=database.getReference("climas/"+key3);
+                            myRef.setValue(clima);
+                            recorrido.setClima(key3);
                             recorrido.setFecha(fecha.getText().toString());
                             String key2 = myRef.push().getKey();
                             recorrido.setIdRuta(key2);
+                            recorrido.setValidaDominio(false);
+                            recorrido.setNombreDestino(fragmentDestino.getTag());
                             rutasDelUsuario.add(recorrido.getIdRuta());
                             recorrido.setUsuariosRuta(usuariosRuta);
                             myRef = database.getReference(PATH_RUTES + key2);
