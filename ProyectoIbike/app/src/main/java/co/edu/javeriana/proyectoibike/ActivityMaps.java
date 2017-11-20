@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -78,8 +79,9 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
     Location mLastLocation;
     LocationRequest mLocationRequest;
 
-    //Variables Campos de Texto.
+    //Variables de la Interfaz.
     private EditText texto;
+    private Button ruta;
 
     // Variables Menu Drawer
     private DrawerLayout mDrawerLayout;
@@ -135,6 +137,7 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
         database= FirebaseDatabase.getInstance();
         polylines = new ArrayList<>();
         texto = (EditText) findViewById(R.id.texto);
+        ruta=(Button) findViewById(R.id.recorrido);
         //------------------------------------------------------------------------------------------
         /*
         * Declaracion Variables Menu Drawer
@@ -188,6 +191,17 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                 }
                 return false;
             }
+        });
+
+        //------------------------------------------------------------------------------------------
+
+        ruta.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ActivityMaps.this, CrearRuta.class));
+            }
+
         });
 
     }//Fin onCreate
