@@ -10,6 +10,8 @@ import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -153,6 +155,8 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
     private String PATH_MARKERS = "markers/";
     private Marcador marcador;
 
+    private LocationManager locationManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,6 +172,7 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
         polylines = new ArrayList<>();
         texto = (EditText) findViewById(R.id.texto);
         ruta=(Button) findViewById(R.id.recorrido);
+
         //------------------------------------------------------------------------------------------
         /*
         * Declaracion Variables Menu Drawer
@@ -376,12 +381,18 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
         }
 
 
+try{
+    String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + userID);
 
-        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + userID);
+    GeoFire geoFire = new GeoFire(ref);
+    geoFire.setLocation(userID, new GeoLocation(location.getLatitude(), location.getLongitude()));
 
-        GeoFire geoFire = new GeoFire(ref);
-        geoFire.setLocation(userID, new GeoLocation(location.getLatitude(), location.getLongitude()));
+}catch (Exception e){
+
+}
+
+
 
 
         if (inicio) {
@@ -848,10 +859,15 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
         super.onStop();
 
 
-        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + userID);
-        GeoFire geoFire = new GeoFire(ref);
-        geoFire.removeLocation(userID);
+try{
+    String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + userID);
+    GeoFire geoFire = new GeoFire(ref);
+    geoFire.removeLocation(userID);
+} catch (Exception e){
+
+}
+
 
 
     }
