@@ -27,16 +27,24 @@ public class RutaCompartible extends AppCompatActivity implements  NavigationVie
     private TextView d;
     private TextView h;
     private TextView di;
+    private TextView sp;
+    private TextView dir;
+    private TextView hu;
+    private TextView es;
+    private TextView tem;
     private Button b;
 
     private StorageReference mStorage;
     private FirebaseAuth mAuth;
     FirebaseDatabase database;
     DatabaseReference myRef;
+    DatabaseReference myRef2;
 
     public Bundle bundle;
     public String id;
     private Rutas rout;
+    private Clima clima;
+    private String idClima;
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -57,6 +65,11 @@ public class RutaCompartible extends AppCompatActivity implements  NavigationVie
         d=(TextView)findViewById(R.id.desde) ;
         h=(TextView)findViewById(R.id.hasta) ;
         di=(TextView)findViewById(R.id.dia) ;
+        sp=(TextView)findViewById(R.id.velviento) ;
+        dir=(TextView)findViewById(R.id.dirviento) ;
+        hu=(TextView)findViewById(R.id.humedad) ;
+        es=(TextView)findViewById(R.id.estado) ;
+        tem=(TextView)findViewById(R.id.temperatura) ;
         b=(Button)findViewById(R.id.unirse) ;
 
         bundle=getIntent().getBundleExtra("bundle");
@@ -67,6 +80,7 @@ public class RutaCompartible extends AppCompatActivity implements  NavigationVie
 
         database= FirebaseDatabase.getInstance();
         myRef=database.getReference("rutas/");
+        myRef2=database.getReference("climas/");
 
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -74,6 +88,26 @@ public class RutaCompartible extends AppCompatActivity implements  NavigationVie
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 rout = dataSnapshot.child(id).getValue(Rutas.class);
+                idClima=rout.getClima();
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                clima = dataSnapshot.child(idClima).getValue(Clima.class);
+                sp.setText("Velocidad del viento: "+clima.getVel_viento()+" Km/h.");
+                dir.setText("Dirección del viento: "+clima.getDir_viento()+"\u00b0");
+                hu.setText("Humedad: "+clima.getHumedad()+"%");
+                es.setText("Estado: "+clima.getTexto());
+                tem.setText("Temperatura: "+clima.getTemperatura()+" \u00b0C");
 
 
 
@@ -89,13 +123,7 @@ public class RutaCompartible extends AppCompatActivity implements  NavigationVie
             @Override
             public void onClick(View v) {
 
-                List<String> usuarios=rout.getUsuariosRuta();
-                usuarios.add(mAuth.getCurrentUser().getUid());
-                rout.setUsuariosRuta(usuarios);
-                myRef = database.getReference("rutas/" + id);
-                myRef.setValue(rout);
-                Intent intent = new Intent(getApplicationContext(),ActivityMaps.class);
-                startActivity(intent);
+                //compartir con facebook
 
             }
 
