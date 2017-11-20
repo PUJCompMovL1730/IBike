@@ -59,6 +59,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -122,6 +125,12 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
 
     //Key Id Ruta Actual
     private String idRutaActual;
+
+    //inicio
+    boolean primeravez=true;
+
+    //Circulo Actual
+    String circuloActual;
 
 
     @Override
@@ -337,8 +346,12 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
 
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(20));
+        if(primeravez){
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(20));
+            primeravez=false;
+        }
+
 
 
         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -355,7 +368,7 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                 realizado=true;
                 Log.d("Termino", "Termino");
                 Log.d("Dist", String.valueOf(distanciaPropia));
-                int puntos = (int) (distanciaPropia / 1000);
+                final int puntos = (int) (distanciaPropia / 1000);
                 Log.d("Puntos Obtenidos: ", String.valueOf(puntos));
                 Snackbar.make(mDrawerLayout, "Completaste la ruta, obtuviste " + puntos + " punto(s).", Snackbar.LENGTH_LONG).show();
                 //Actualiza Base de Datos.
@@ -371,6 +384,8 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                             rutas.setRealizado(realizado);
                             myRef = database.getReference("rutas/" + idRuta);
                             myRef.setValue(rutas);
+                            validaDominio = false;
+                            realizado = false;
                         }
 
                     }
@@ -380,6 +395,68 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
 
                     }
                 });
+
+                myRef = database.getReference("users/");
+                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String idUsuario = mAuth.getCurrentUser().getUid();
+                        if (idUsuario != null){
+                            Usuarios usuario = dataSnapshot.child(idUsuario).getValue(Usuarios.class);
+                            Double punt = usuario.getPuntuacion();
+                            usuario.setPuntuacion(punt+puntos);
+                            myRef = database.getReference("users/" + idUsuario);
+                            myRef.setValue(usuario);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+                //Actualizar Puntaje Zonas
+                myRef = database.getReference("circulos/");
+                if(circuloActual.equals("Afuera")){
+
+                } else if(circuloActual.equals("Amarillo")){
+
+                    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            String color = circuloActual;
+                            if (color != null){
+                                Circulos circulo = dataSnapshot.child(color).getValue(Circulos.class);
+
+                                myRef = database.getReference("users/" + color);
+                                myRef.setValue(circulo);
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+                } else if(circuloActual.equals("Azul")){
+
+                } else if(circuloActual.equals("Rojo")){
+
+                }
+
+
+
+
+
+
+
+
+
+
 
                 inicio = false;
                 mMap.clear();
@@ -393,15 +470,17 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
 
 
     public void cargarCirculos() {
-        CircleOptions circleOptions = new CircleOptions()
-                .center(new LatLng(4.626895, -74.064181))
+
+
+        CircleOptions circleOptions = new CircleOptions() //Amarillo
+                .center(new LatLng(4.626895, -74.064181)) //Cambiar Lat Lng
                 .strokeWidth(10)
                 .fillColor(Color.argb(128, 102, 216, 249))
                 .strokeColor(Color.argb(128, 102, 216, 249))
-                .radius(5000);
+                .radius(5000); //Cambiar Radio
         mMap.addCircle(circleOptions);
 
-        CircleOptions circleOptions2 = new CircleOptions()
+        CircleOptions circleOptions2 = new CircleOptions() //Azul
                 .center(new LatLng(4.728902, -74.113546))
                 .strokeWidth(10)
                 .fillColor(Color.argb(128, 248,243,053))
@@ -409,7 +488,7 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                 .radius(5000);
         mMap.addCircle(circleOptions2);
 
-        CircleOptions circleOptions3 = new CircleOptions()
+        CircleOptions circleOptions3 = new CircleOptions() //Rojo
                 .center(new LatLng(4.616416, -74.153490))
                 .strokeWidth(10)
                 .fillColor(Color.argb(128, 255, 0, 0))
@@ -455,7 +534,7 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-
+//Error OnStop
     @Override
     protected void onStop() {
         super.onStop();
@@ -463,7 +542,6 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
 
         String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + userID);
-
         GeoFire geoFire = new GeoFire(ref);
         geoFire.removeLocation(userID);
 
@@ -744,6 +822,7 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
 
 
         if ((int) circulo1 < 5000) {
+            circuloActual="Amarillo";
             Log.d("Circulo1", "Estoy en Universidad");
             double circulo11 = distance(4.626895, -74.064181, lat, lng);
             if (circulo11 < 5000) {
@@ -791,6 +870,7 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                 dialogo11.show();
             }
         } else if ((int) circulo2 < 5000) {
+            circuloActual="Azul";
             Log.d("Circulo2", "Casa Camilo");
             double circulo22 = distance(4.728902, -74.113546, lat, lng);
             if (circulo22 < 5000) {
@@ -838,6 +918,7 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                 dialogo11.show();
             }
         } else if ((int) circulo3 < 5000) {
+            circuloActual="Rojo";
             Log.d("Circulo3", "Hospital Kenedy");
             double circulo33 = distance(4.616416, -74.153490, lat, lng);
             if (circulo33 < 5000) {
@@ -885,6 +966,7 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                 dialogo11.show();
             }
         } else {
+            circuloActual="Afuera";
             Log.d("FUERA", "FUERA");
 
             AlertDialog.Builder dialogo1 = new AlertDialog.Builder(this);
