@@ -68,47 +68,4 @@ public class InfoEvento extends AppCompatActivity {
 
     }
 
-    private void obtenerInfo() {
-        final String idEmpresario = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        myRef = database.getReference(PATH_USERSE);
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                empresario = dataSnapshot.child(idEmpresario).getValue(Empresario.class);
-                List<String> infoEventos = new ArrayList<String>();
-                infoEventos = empresario.getIdEventos();
-
-                for(int i = 0; i<infoEventos.size(); i++){
-                    final String idEvento = infoEventos.get(i).trim();
-                    myRef = database.getReference(PATH_EVENTS);
-                    final int numEventos = i;
-                    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            evento = dataSnapshot.child(idEvento).getValue(Evento.class);
-                            if(evento.isEstado()){
-                                String info = "Evento: " + evento.getDescripcion() + "\n" +
-                                              "Fecha: " + evento.getFecha() + "\n" +
-                                              "Participantes: " + evento.getIdUsuarios().size();
-                                //array[numEventos] += info;
-                                //datos.setText(datos.getText().toString() + info + "\n" );
-                            }
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
 }
