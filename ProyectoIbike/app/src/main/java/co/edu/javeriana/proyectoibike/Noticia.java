@@ -8,14 +8,20 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.List;
 
 public class Noticia extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener{
 
@@ -30,6 +36,8 @@ public class Noticia extends AppCompatActivity implements  NavigationView.OnNavi
     DatabaseReference myRef;
 
     public Bundle bundle;
+    public String id;
+    private Rutas rout;
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -50,11 +58,49 @@ public class Noticia extends AppCompatActivity implements  NavigationView.OnNavi
         d=(TextView)findViewById(R.id.desde) ;
         h=(TextView)findViewById(R.id.hasta) ;
         di=(TextView)findViewById(R.id.dia) ;
+        b=(Button)findViewById(R.id.unirse) ;
 
         bundle=getIntent().getBundleExtra("bundle");
         d.setText("Ruta planeada desde: "+bundle.get("desde").toString());
         h.setText("Destino: "+bundle.get("hasta").toString());
         di.setText("Fecha: "+bundle.get("dia").toString());
+        id=bundle.get("id").toString();
+
+        database= FirebaseDatabase.getInstance();
+        myRef=database.getReference("rutas/");
+
+
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    rout = dataSnapshot.child(id).getValue(Rutas.class);
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                List<String> usuarios=rout.getUsuariosRuta();
+                usuarios.add(mAuth.getCurrentUser().getUid());
+                rout.setUsuariosRuta(usuarios);
+                myRef = database.getReference("rutas/" + id);
+                myRef.setValue(rout);
+                Intent intent = new Intent(getApplicationContext(),ActivityMaps.class);
+                startActivity(intent);
+
+            }
+
+        });
 
         if (mNavigationView != null) {
             mNavigationView.setNavigationItemSelectedListener(this);

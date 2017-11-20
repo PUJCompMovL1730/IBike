@@ -93,7 +93,7 @@ public class ActivityNoticias extends AppCompatActivity implements  NavigationVi
 
     public void ruta(){
         final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        Toast.makeText(this, "" + currentFirebaseUser.getUid(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "" + currentFirebaseUser.getUid(), Toast.LENGTH_SHORT).show();
 
 
         myRef = database.getReference("users/");
