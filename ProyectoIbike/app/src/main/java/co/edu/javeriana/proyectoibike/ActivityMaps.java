@@ -130,6 +130,9 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
     //Circulo Actual
     String circuloActual;
 
+    //EquipoActual
+    String EquipoActual;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -391,6 +394,7 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                             Usuarios usuario = dataSnapshot.child(idUsuario).getValue(Usuarios.class);
                             Double punt = usuario.getPuntuacion();
                             usuario.setPuntuacion(punt+puntos);
+                            EquipoActual = usuario.getEquipo();
                             myRef = database.getReference("users/" + idUsuario);
                             myRef.setValue(usuario);
                         }
@@ -415,8 +419,28 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                             String color = circuloActual;
                             if (color != null){
                                 Circulos circulo = dataSnapshot.child(color).getValue(Circulos.class);
+                                int pA= circulo.getPuntos_amarillo();
+                                int pAz= circulo.getPuntos_azul();
+                                int pR= circulo.getPuntos_rojo();
+                                int radioActual = circulo.getRadioactual();
+                                int radioMinimo = circulo.getRadiominimo();
+                                if(EquipoActual.equals("Amarillo")){
+                                    circulo.setPuntos_amarillo(pA + puntos);
+                                } else if(EquipoActual.equals("Azul")){
+                                    circulo.setPuntos_amarillo(pA - puntos);
+                                    circulo.setPuntos_azul(pAz + puntos);
+                                            if((radioActual-radioMinimo) != 0){
+                                                circulo.setRadioactual(radioActual-1000); //Resta al radio del circulo
+                                            }
+                                } else if(EquipoActual.equals("Rojo")){
+                                    circulo.setPuntos_amarillo(pA - puntos);
+                                    circulo.setPuntos_rojo(pR + puntos);
+                                            if((radioActual-radioMinimo) != 0){
+                                                circulo.setRadioactual(radioActual-1000); //Resta al radio del circulo
+                                             }
+                                }
 
-                                myRef = database.getReference("users/" + color);
+                                myRef = database.getReference("circulos/" + color);
                                 myRef.setValue(circulo);
                             }
 
@@ -430,7 +454,88 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
 
                 } else if(circuloActual.equals("Azul")){
 
+                    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            String color = circuloActual;
+                            if (color != null){
+                                Circulos circulo = dataSnapshot.child(color).getValue(Circulos.class);
+                                int pA= circulo.getPuntos_amarillo();
+                                int pAz= circulo.getPuntos_azul();
+                                int pR= circulo.getPuntos_rojo();
+                                int radioActual = circulo.getRadioactual();
+                                int radioMinimo = circulo.getRadiominimo();
+                                if(EquipoActual.equals("Amarillo")){
+                                    circulo.setPuntos_amarillo(pA + puntos);
+                                    circulo.setPuntos_azul(pAz - puntos);
+                                    if((radioActual-radioMinimo) != 0){
+                                        circulo.setRadioactual(radioActual-1000); //Resta al radio del circulo
+                                    }
+                                } else if(EquipoActual.equals("Azul")){
+                                    circulo.setPuntos_azul(pAz + puntos);
+
+                                } else if(EquipoActual.equals("Rojo")){
+                                    circulo.setPuntos_azul(pAz - puntos);
+                                    circulo.setPuntos_rojo(pR + puntos);
+                                    if((radioActual-radioMinimo) != 0){
+                                        circulo.setRadioactual(radioActual-1000); //Resta al radio del circulo
+                                    }
+                                }
+
+                                myRef = database.getReference("circulos/" + color);
+                                myRef.setValue(circulo);
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
                 } else if(circuloActual.equals("Rojo")){
+
+                    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            String color = circuloActual;
+                            if (color != null){
+                                Circulos circulo = dataSnapshot.child(color).getValue(Circulos.class);
+                                int pA= circulo.getPuntos_amarillo();
+                                int pAz= circulo.getPuntos_azul();
+                                int pR= circulo.getPuntos_rojo();
+                                int radioActual = circulo.getRadioactual();
+                                int radioMinimo = circulo.getRadiominimo();
+                                if(EquipoActual.equals("Amarillo")){
+                                    circulo.setPuntos_amarillo(pA + puntos);
+                                    circulo.setPuntos_rojo(pR - puntos);
+                                    if((radioActual-radioMinimo) != 0){
+                                        circulo.setRadioactual(radioActual-1000); //Resta al radio del circulo
+                                    }
+                                } else if(EquipoActual.equals("Azul")){
+                                    circulo.setPuntos_azul(pAz + puntos);
+                                    circulo.setPuntos_rojo(pR - puntos);
+                                    if((radioActual-radioMinimo) != 0){
+                                        circulo.setRadioactual(radioActual-1000); //Resta al radio del circulo
+                                    }
+
+                                } else if(EquipoActual.equals("Rojo")){
+                                    circulo.setPuntos_rojo(pR + puntos);
+
+                                }
+
+                                myRef = database.getReference("circulos/" + color);
+                                myRef.setValue(circulo);
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
 
                 }
 
