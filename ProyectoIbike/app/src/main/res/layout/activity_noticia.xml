@@ -17,15 +17,58 @@
         tools:context="co.edu.javeriana.proyectoibike.Noticia">
 
         <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ruta planeada"
+        android:id="@+id/texto"
+        android:textSize="25dp"
+        android:layout_margin="20dp"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ruta planeada"
-            android:id="@+id/texto"
-            android:textSize="25dp"
-            android:layout_margin="20dp"
+            android:text="Ruta planeada desde: "
+            android:id="@+id/desde"
+            android:textSize="15dp"
+            android:layout_margin="15dp"
+            android:layout_below="@+id/texto"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hasta: "
+            android:id="@+id/hasta"
+            android:textSize="15dp"
+            android:layout_margin="15dp"
+            android:layout_below="@+id/desde"
             android:textAlignment="center"
             android:textStyle="bold"
             />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="El día: "
+            android:id="@+id/dia"
+            android:textSize="15dp"
+            android:layout_margin="15dp"
+            android:layout_below="@+id/hasta"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Unirme"
+            android:id="@+id/unirse"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"/>
 
 
     </RelativeLayout>

@@ -79,8 +79,10 @@ public class ActivityNoticias extends AppCompatActivity implements  NavigationVi
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getBaseContext(), Noticia.class);
                 Bundle bundle= new Bundle();
-                //bundle.putString("nombre", mens2.get(position).getNombre() +" "+ mens2.get(position).getApellido() );
-
+                bundle.putString("hasta", nombresFriend.get(position).getNombreDestino() );
+                bundle.putString("desde", nombresFriend.get(position).getLatitudOrigen()+", "+nombresFriend.get(position).getLongitudOrigen() );
+                bundle.putString("dia", nombresFriend.get(position).getFecha() );
+                bundle.putString("id", nombresFriend.get(position).getIdRuta() );
                 intent.putExtra("bundle", bundle);
                 startActivity(intent);
             }

@@ -8,7 +8,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -17,11 +19,17 @@ import com.google.firebase.storage.StorageReference;
 
 public class Noticia extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener{
 
+    private TextView d;
+    private TextView h;
+    private TextView di;
+    private Button b;
+
     private StorageReference mStorage;
     private FirebaseAuth mAuth;
     FirebaseDatabase database;
     DatabaseReference myRef;
 
+    public Bundle bundle;
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -38,6 +46,15 @@ public class Noticia extends AppCompatActivity implements  NavigationView.OnNavi
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         NavigationView mNavigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        d=(TextView)findViewById(R.id.desde) ;
+        h=(TextView)findViewById(R.id.hasta) ;
+        di=(TextView)findViewById(R.id.dia) ;
+
+        bundle=getIntent().getBundleExtra("bundle");
+        d.setText("Ruta planeada desde: "+bundle.get("desde").toString());
+        h.setText("Destino: "+bundle.get("hasta").toString());
+        di.setText("Fecha: "+bundle.get("dia").toString());
 
         if (mNavigationView != null) {
             mNavigationView.setNavigationItemSelectedListener(this);
