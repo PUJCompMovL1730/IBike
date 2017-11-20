@@ -66,7 +66,6 @@ public class CrearRuta extends AppCompatActivity {
     public static final String PATH_USERS = "users/";
     public static final String PATH_RUTES = "rutes/";
     ProgressDialog mProgressDialog;
-    ArrayList<HashMap<String, String>> arraylist;
     public Clima clima;
 
     @Override
@@ -260,6 +259,8 @@ public class CrearRuta extends AppCompatActivity {
 
             }
         });
+
+        new DownloadJSON().execute();
     }
     @Override
     protected void onStart() {
@@ -337,7 +338,7 @@ public class CrearRuta extends AppCompatActivity {
             // Create a progressdialog
             mProgressDialog = new ProgressDialog(CrearRuta.this);
             // Set progressdialog title
-            mProgressDialog.setTitle("Obteniendo Clima");
+            mProgressDialog.setTitle("Obteniendo Información");
             // Set progressdialog message
             mProgressDialog.setMessage("Cargando...");
             mProgressDialog.setIndeterminate(false);
@@ -347,8 +348,8 @@ public class CrearRuta extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            // Create the array
-            arraylist = new ArrayList<HashMap<String, String>>();
+
+            clima = new Clima();
             // YQL JSON URL
             String url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20%3D%20368148%20%20and%20u%3D'c'&format=json&diagnostics=true&callback=";
 
@@ -361,13 +362,11 @@ public class CrearRuta extends AppCompatActivity {
                 JSONObject wind = chan.getJSONObject("wind");
                 JSONObject atmosphere = chan.getJSONObject("atmosphere");
                 JSONObject condition = chan.getJSONObject("item").getJSONObject("condition");
-
-
-
-
-                    //map.put("thumbnail", il.optString("thumbnail"));
-                    //arraylist.add(map);
-
+                clima.setDir_viento(wind.optLong("direction"));
+                clima.setVel_viento(wind.optLong("speed"));
+                clima.setHumedad(atmosphere.optLong("humidity"));
+                clima.setTemperatura(condition.optInt("temp"));
+                clima.setTexto(condition.optString("text"));
 
             } catch (JSONException e) {
                 Log.e("Error", e.getMessage());
@@ -378,13 +377,8 @@ public class CrearRuta extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void args) {
-            // Locate the listview in listview_main.xml
-            //listview = (ListView) findViewById(R.id.listview);
-            // Pass the results into ListViewAdapter.java
-            //adapter = new ListViewAdapter(MainActivity.this, arraylist);
-            // Binds the Adapter to the ListView
-            //listview.setAdapter(adapter);
-            // Close the progressdialog
+            //Toast.makeText(CrearRuta.this, clima.toString(), Toast.LENGTH_SHORT).show();
+            Log.i("Clima obtenido", clima.toString());
             mProgressDialog.dismiss();
         }
     }

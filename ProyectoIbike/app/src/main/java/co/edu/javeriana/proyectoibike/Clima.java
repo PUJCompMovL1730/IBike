@@ -55,4 +55,14 @@ public class Clima {
     public void setTexto(String texto) {
         this.texto = texto;
     }
+
+    @Override
+    public String toString() {
+        return "Clima: " +
+                "Dirección del viento= " + dir_viento +
+                "\u00b0, Velocidad del viento= " + vel_viento +
+                "Km/h, Humedad= " + humedad +
+                "%, Temperatura= " + temperatura +
+                ", Estado= " + texto + '\'';
+    }
 }
