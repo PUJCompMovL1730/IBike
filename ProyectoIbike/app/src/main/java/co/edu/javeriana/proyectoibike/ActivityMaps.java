@@ -959,7 +959,7 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
         if(list.size()>0) {
             Address add = list.get(0);
             String locality = add.getLocality();
-            Toast.makeText(ActivityMaps.this, locality, Toast.LENGTH_LONG).show();
+           // Toast.makeText(ActivityMaps.this, locality, Toast.LENGTH_LONG).show();
 
             if (add != null) {
                 double lat = add.getLatitude();
@@ -1068,7 +1068,9 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                 String key2= myRef.push().getKey();
                 myRef=database.getReference("climas/"+key2);
                 myRef.setValue(clima);
-                final Rutas ruta = new Rutas(key,latitud,longitud,longitudOrigen,latitudOrigen,fechaActual.toString(),dist,realizado,validaDominio,direccion,false,key2);
+                List<String> usuariosRuta = new ArrayList<String>();
+                usuariosRuta.add(mAuth.getCurrentUser().getUid());
+                final Rutas ruta = new Rutas(key,latitud,longitud,longitudOrigen,latitudOrigen,fechaActual.toString(),dist,realizado,validaDominio,direccion,false,key2, usuariosRuta);
                 //Envio Datos a Base de Datos FireBase
                 myRef=database.getReference("rutas/"+key);
                 myRef.setValue(ruta);
@@ -1125,8 +1127,11 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                 String key2= myRef.push().getKey();
                 myRef=database.getReference("climas/"+key2);
                 myRef.setValue(clima);
-                final Rutas ruta = new Rutas(key,latitud,longitud,longitudOrigen,latitudOrigen,fechaActual.toString(),dist,realizado,validaDominio,direccion,false,key2);
+                List<String> usuariosRuta = new ArrayList<String>();
+                usuariosRuta.add(mAuth.getCurrentUser().getUid());
+                final Rutas ruta = new Rutas(key,latitud,longitud,longitudOrigen,latitudOrigen,fechaActual.toString(),dist,realizado,validaDominio,direccion,false,key2, usuariosRuta);
                 //Envio Datos a Base de Datos FireBase
+
                 myRef=database.getReference("rutas/"+key);
                 myRef.setValue(ruta);
                 //Actualizar Lista de rutas de Usuario
@@ -1176,7 +1181,9 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                 String key2= myRef.push().getKey();
                 myRef=database.getReference("climas/"+key2);
                 myRef.setValue(clima);
-                final Rutas ruta = new Rutas(key,latitud,longitud,longitudOrigen,latitudOrigen,fechaActual.toString(),dist,realizado,validaDominio,direccion,false,key2);
+                List<String> usuariosRuta = new ArrayList<String>();
+                usuariosRuta.add(mAuth.getCurrentUser().getUid());
+                final Rutas ruta = new Rutas(key,latitud,longitud,longitudOrigen,latitudOrigen,fechaActual.toString(),dist,realizado,validaDominio,direccion,false,key2, usuariosRuta);
                 //Envio Datos a Base de Datos FireBase
                 myRef=database.getReference("rutas/"+key);
                 myRef.setValue(ruta);
@@ -1227,7 +1234,9 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                 String key2= myRef.push().getKey();
                 myRef=database.getReference("climas/"+key2);
                 myRef.setValue(clima);
-                final Rutas ruta = new Rutas(key,latitud,longitud,longitudOrigen,latitudOrigen,fechaActual.toString(),dist,realizado,validaDominio,direccion,false,key2);
+                List<String> usuariosRuta = new ArrayList<String>();
+                usuariosRuta.add(mAuth.getCurrentUser().getUid());
+                final Rutas ruta = new Rutas(key,latitud,longitud,longitudOrigen,latitudOrigen,fechaActual.toString(),dist,realizado,validaDominio,direccion,false,key2, usuariosRuta);
                 //Envio Datos a Base de Datos FireBase
                 myRef=database.getReference("rutas/"+key);
                 myRef.setValue(ruta);
@@ -1281,7 +1290,9 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                     String key2= myRef.push().getKey();
                     myRef=database.getReference("climas/"+key2);
                     myRef.setValue(clima);
-                    final Rutas ruta = new Rutas(key,latitud,longitud,longitudOrigen,latitudOrigen,fechaActual.toString(),dist,realizado,validaDominio,direccion,false,key2);
+                    List<String> usuariosRuta = new ArrayList<String>();
+                    usuariosRuta.add(mAuth.getCurrentUser().getUid());
+                    final Rutas ruta = new Rutas(key,latitud,longitud,longitudOrigen,latitudOrigen,fechaActual.toString(),dist,realizado,validaDominio,direccion,false,key2, usuariosRuta);
                     //Envio Datos a Base de Datos FireBase
                     myRef=database.getReference("rutas/"+key);
                     myRef.setValue(ruta);

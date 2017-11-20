@@ -29,7 +29,7 @@ public class Rutas {
     private String  clima;
 
 
-    public Rutas(String idRuta, double latitudDestino, double longitudDestino, double longitudOrigen, double latitudOrigen, String fecha, double kilometros, boolean realizado, boolean validaDominio,String nombreDestino, boolean programada, String clima) {
+    public Rutas(String idRuta, double latitudDestino, double longitudDestino, double longitudOrigen, double latitudOrigen, String fecha, double kilometros, boolean realizado, boolean validaDominio,String nombreDestino, boolean programada, String clima, List<String> usuariosRuta) {
         this.idRuta = idRuta;
         this.latitudDestino = latitudDestino;
         this.longitudDestino = longitudDestino;
@@ -42,6 +42,7 @@ public class Rutas {
         this.nombreDestino = nombreDestino;
         this.programada = programada;
         this.clima=clima;
+        this.usuariosRuta=usuariosRuta;
     }
 
     public String getNombreDestino() {
