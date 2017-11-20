@@ -150,6 +150,9 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
     ProgressDialog mProgressDialog;
     public Clima clima;
 
+    private String PATH_MARKERS = "markers/";
+    private Marcador marcador;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -757,6 +760,8 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                         mMap.addCircle(circleOptions);
                     }
                 }
+
+                cargarMarcadores();
             }
 
             @Override
@@ -772,6 +777,29 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
 
 
 
+    }
+
+
+    private void cargarMarcadores() {
+        myRef = database.getReference(PATH_MARKERS);
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot marca : dataSnapshot.getChildren()){
+                    marcador = marca.getValue(Marcador.class);
+                    LatLng posicion = new LatLng(marcador.getLatitudMarcador(),marcador.getLongitudMarcador());
+                    mMap.addMarker(new MarkerOptions().position(posicion)
+                            .title(marcador.getDescripcion()).snippet("Multiplicador por visitar este punto: x" + marcador.getMultiplicador()));
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void onStatusChanged(String s, int i, Bundle bundle) {
