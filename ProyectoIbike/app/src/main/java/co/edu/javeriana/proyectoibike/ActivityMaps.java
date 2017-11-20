@@ -2,6 +2,7 @@ package co.edu.javeriana.proyectoibike;
 
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,6 +10,7 @@ import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -59,10 +61,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -134,6 +145,10 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
 
     //EquipoActual
     String EquipoActual;
+
+    //Atributos para el clima
+    ProgressDialog mProgressDialog;
+    public Clima clima;
 
 
     @Override
@@ -216,6 +231,7 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
 
         });
 
+        new DownloadJSONA().execute();
     }//Fin onCreate
 
 
@@ -784,15 +800,21 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                 lowerLeftLongitude,
                 upperRightLatitude,
                 upperRigthLongitude);
-        Address add = list.get(0);
-        String locality = add.getLocality();
-        Toast.makeText(ActivityMaps.this, locality, Toast.LENGTH_LONG).show();
+
+        if(list.size()>0) {
+            Address add = list.get(0);
+            String locality = add.getLocality();
+            Toast.makeText(ActivityMaps.this, locality, Toast.LENGTH_LONG).show();
+
+            if (add != null) {
+                double lat = add.getLatitude();
+                double lng = add.getLongitude();
+                gotoLocation(lat, lng, 15, direccion);
+            }
 
 
-        double lat = add.getLatitude();
-        double lng = add.getLongitude();
 
-        gotoLocation(lat, lng, 15, direccion);
+        }
 
     }
 
@@ -888,7 +910,10 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                 idRutaActual = key;
                 Calendar calendar = new GregorianCalendar();
                 Date fechaActual = calendar.getTime();
-                final Rutas ruta = new Rutas(key,latitud,longitud,longitudOrigen,latitudOrigen,fechaActual.toString(),dist,realizado,validaDominio,direccion);
+                String key2= myRef.push().getKey();
+                myRef=database.getReference("climas/"+key2);
+                myRef.setValue(clima);
+                final Rutas ruta = new Rutas(key,latitud,longitud,longitudOrigen,latitudOrigen,fechaActual.toString(),dist,realizado,validaDominio,direccion,false,key2);
                 //Envio Datos a Base de Datos FireBase
                 myRef=database.getReference("rutas/"+key);
                 myRef.setValue(ruta);
@@ -942,7 +967,10 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                 idRutaActual = key;
                 Calendar calendar = new GregorianCalendar();
                 Date fechaActual = calendar.getTime();
-                final Rutas ruta = new Rutas(key,latitud,longitud,longitudOrigen,latitudOrigen,fechaActual.toString(),dist,realizado,validaDominio,direccion);
+                String key2= myRef.push().getKey();
+                myRef=database.getReference("climas/"+key2);
+                myRef.setValue(clima);
+                final Rutas ruta = new Rutas(key,latitud,longitud,longitudOrigen,latitudOrigen,fechaActual.toString(),dist,realizado,validaDominio,direccion,false,key2);
                 //Envio Datos a Base de Datos FireBase
                 myRef=database.getReference("rutas/"+key);
                 myRef.setValue(ruta);
@@ -990,7 +1018,10 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                 idRutaActual = key;
                 Calendar calendar = new GregorianCalendar();
                 Date fechaActual = calendar.getTime();
-                final Rutas ruta = new Rutas(key,latitud,longitud,longitudOrigen,latitudOrigen,fechaActual.toString(),dist,realizado,validaDominio,direccion);
+                String key2= myRef.push().getKey();
+                myRef=database.getReference("climas/"+key2);
+                myRef.setValue(clima);
+                final Rutas ruta = new Rutas(key,latitud,longitud,longitudOrigen,latitudOrigen,fechaActual.toString(),dist,realizado,validaDominio,direccion,false,key2);
                 //Envio Datos a Base de Datos FireBase
                 myRef=database.getReference("rutas/"+key);
                 myRef.setValue(ruta);
@@ -1038,7 +1069,10 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                 idRutaActual = key;
                 Calendar calendar = new GregorianCalendar();
                 Date fechaActual = calendar.getTime();
-                final Rutas ruta = new Rutas(key,latitud,longitud,longitudOrigen,latitudOrigen,fechaActual.toString(),dist,realizado,validaDominio,direccion);
+                String key2= myRef.push().getKey();
+                myRef=database.getReference("climas/"+key2);
+                myRef.setValue(clima);
+                final Rutas ruta = new Rutas(key,latitud,longitud,longitudOrigen,latitudOrigen,fechaActual.toString(),dist,realizado,validaDominio,direccion,false,key2);
                 //Envio Datos a Base de Datos FireBase
                 myRef=database.getReference("rutas/"+key);
                 myRef.setValue(ruta);
@@ -1089,7 +1123,10 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                     idRutaActual = key;
                     Calendar calendar = new GregorianCalendar();
                     Date fechaActual = calendar.getTime();
-                    final Rutas ruta = new Rutas(key,latitud,longitud,longitudOrigen,latitudOrigen,fechaActual.toString(),dist,realizado,validaDominio,direccion);
+                    String key2= myRef.push().getKey();
+                    myRef=database.getReference("climas/"+key2);
+                    myRef.setValue(clima);
+                    final Rutas ruta = new Rutas(key,latitud,longitud,longitudOrigen,latitudOrigen,fechaActual.toString(),dist,realizado,validaDominio,direccion,false,key2);
                     //Envio Datos a Base de Datos FireBase
                     myRef=database.getReference("rutas/"+key);
                     myRef.setValue(ruta);
@@ -1130,6 +1167,101 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
 
 
         return true;
+    }
+
+
+    public static JSONObject getJSONfromURL(String url){
+        InputStream is = null;
+        String result = "";
+        JSONObject jArray = null;
+
+        // Download JSON data from URL
+        try{
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost httppost = new HttpPost(url);
+            HttpResponse response = httpclient.execute(httppost);
+            HttpEntity entity = response.getEntity();
+            is = entity.getContent();
+
+        }catch(Exception e){
+            Log.e("log_tag", "Error in http connection "+e.toString());
+        }
+
+        // Convert response to string
+        try{
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+            is.close();
+            result=sb.toString();
+        }catch(Exception e){
+            Log.e("log_tag", "Error converting result "+e.toString());
+        }
+
+        try{
+
+            jArray = new JSONObject(result);
+        }catch(JSONException e){
+            Log.e("log_tag", "Error parsing data "+e.toString());
+        }
+
+        return jArray;
+    }
+    //Esto obtiene el clima.
+    private class DownloadJSONA extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Create a progressdialog
+            mProgressDialog = new ProgressDialog(ActivityMaps.this);
+            // Set progressdialog title
+            mProgressDialog.setTitle("Obteniendo Información");
+            // Set progressdialog message
+            mProgressDialog.setMessage("Cargando...");
+            mProgressDialog.setIndeterminate(false);
+            // Show progressdialog
+            mProgressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            clima = new Clima();
+            // YQL JSON URL
+            String url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20%3D%20368148%20%20and%20u%3D'c'&format=json&diagnostics=true&callback=";
+
+            try {
+                // Retrive JSON Objects from the given URL in JSONfunctions.class
+                JSONObject json_data = getJSONfromURL(url);
+                JSONObject json_query = json_data.getJSONObject("query");
+                JSONObject json_results = json_query.getJSONObject("results");
+                JSONObject chan = json_results.getJSONObject("channel");
+                JSONObject wind = chan.getJSONObject("wind");
+                JSONObject atmosphere = chan.getJSONObject("atmosphere");
+                JSONObject condition = chan.getJSONObject("item").getJSONObject("condition");
+                clima.setDir_viento(wind.optLong("direction"));
+                clima.setVel_viento(wind.optLong("speed"));
+                clima.setHumedad(atmosphere.optLong("humidity"));
+                clima.setTemperatura(condition.optInt("temp"));
+                clima.setTexto(condition.optString("text"));
+
+            } catch (JSONException e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void args) {
+            //Toast.makeText(CrearRuta.this, clima.toString(), Toast.LENGTH_SHORT).show();
+            Log.i("Clima obtenido", clima.toString());
+            mProgressDialog.dismiss();
+        }
     }
 
 
