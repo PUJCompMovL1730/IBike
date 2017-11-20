@@ -163,10 +163,9 @@ public class Rutas {
 
     @Override
     public String toString() {
-        return "Ruta de " +
-
-                " metros " + (int)kilometros +
+        return "Ruta " +
                 " para llegar a " + nombreDestino  +
+                 (int)kilometros + " kilometros" +
                 ". \nFecha: " + fecha;
     }
 }

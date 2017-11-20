@@ -154,7 +154,7 @@ public class ActivityDetailFriend extends AppCompatActivity implements  Navigati
 
     public void agregarAmigo(final String llave){
         final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        Toast.makeText(this, "" + currentFirebaseUser.getUid(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "" + "Amigo Agregado.", Toast.LENGTH_SHORT).show();
 
 
         myRef = database.getReference("users/");

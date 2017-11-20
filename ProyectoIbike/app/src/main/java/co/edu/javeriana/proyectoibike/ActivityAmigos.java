@@ -112,15 +112,17 @@ public class ActivityAmigos extends AppCompatActivity implements  NavigationView
                     final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
                     Usuarios userAct = dataSnapshot.child(currentFirebaseUser.getUid()).getValue(Usuarios.class);
 
-                    if(friendKey.equals(userAct.getId())){
+                    if(friendKey!=null) {
+                        if (friendKey.equals(userAct.getId())) {
 
-                    } else {
-                        if(userAlreadyAdd(userAct.getListaAmigos(),friendKey)) {
-                            llavesFriends.add(myUser.getId());
-                            nombresFriend.add(myUser.getNombre()+" "+myUser.getApellido());
+                        } else {
+                            if (userAlreadyAdd(userAct.getListaAmigos(), friendKey)) {
+                                llavesFriends.add(myUser.getId());
+                                nombresFriend.add(myUser.getNombre() + " " + myUser.getApellido());
+
+                            }
 
                         }
-
                     }
 
                 }

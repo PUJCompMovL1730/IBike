@@ -86,25 +86,27 @@ public class Conversaciones extends AppCompatActivity implements  NavigationView
                     Usuarios men = dataSnapshot.child(FirebaseAuth.getInstance()
                             .getCurrentUser().getUid()).getValue(Usuarios.class);
 
-                    Log.i("zzz", "Encontró conversación: " + men);
+                    //Log.i("zzz", "Encontró conversación: " + men);
 
                     mens=new ArrayList<String>();
                     mens2=new ArrayList<Usuarios>();
 
-                    for (String a:men.getListaAmigos()) {
-                        mens.add(a);
+                    if(men.getListaAmigos()!=null) {
+                        for (String a : men.getListaAmigos()) {
+                            mens.add(a);
+                        }
+
+                        for (String s : mens) {
+                            Usuarios m = dataSnapshot.child(s).getValue(Usuarios.class);
+                            mens2.add(m);
+                        }
+
+                        adapter = new ArrayAdapter<Usuarios>(Conversaciones.this, android.R.layout.simple_list_item_1, mens2);
+
+
+                        ls.setAdapter(adapter);
+                        ls.setSelection(adapter.getCount() - 1);
                     }
-
-                    for (String s:mens) {
-                        Usuarios m = dataSnapshot.child(s).getValue(Usuarios.class);
-                        mens2.add(m);
-                    }
-
-                    adapter = new ArrayAdapter<Usuarios>(Conversaciones.this,android.R.layout.simple_list_item_1,mens2);
-
-
-                    ls.setAdapter(adapter);
-                    ls.setSelection(adapter.getCount() - 1);
 
                 }
             }

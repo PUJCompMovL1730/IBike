@@ -75,7 +75,7 @@ public class InscripcionEvento extends AppCompatActivity {
                 int i = 0;
                 List<String> usuariosEvento = event.getIdUsuarios();
                 if(!usuariosEvento.isEmpty()){
-                    while (registrado==false){
+                    while (registrado==false&&i<usuariosEvento.size()){
                         if(usuariosEvento.get(i).equalsIgnoreCase(mAuth.getCurrentUser().getUid())){
                             registrado = true;
                         }
