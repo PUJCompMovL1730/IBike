@@ -102,4 +102,12 @@ public class Evento {
     public void setLatitudDestino(double latitudDestino) {
         this.latitudDestino = latitudDestino;
     }
+
+    @Override
+    public String toString() {
+        String info;
+        return info = "Evento: " + descripcion + "\n" +
+                        "Fecha: " + fecha + "\n" +
+                "Participantes: " + idUsuarios.size();
+    }
 }
