@@ -56,7 +56,6 @@ public class CrearRuta extends AppCompatActivity {
     DatabaseReference myRef;
     private Button guardar;
     private ImageButton posicionA;
-    private Button iniciarR;
     private Usuarios usuario;
     private Rutas recorrido;
     private LatLng locacionOrigen;
@@ -77,7 +76,6 @@ public class CrearRuta extends AppCompatActivity {
         guardar = (Button) findViewById(R.id.guardarRecorrido);
         database = FirebaseDatabase.getInstance();
         posicionA = (ImageButton) findViewById(R.id.posicionActual);
-        iniciarR = (Button) findViewById(R.id.iniciar);
         recorrido = new Rutas();
         final PlaceAutocompleteFragment fragmentOrigen = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.placeOrigen);
@@ -168,8 +166,6 @@ public class CrearRuta extends AppCompatActivity {
                             }
                         }
 
-
-
                     }
 
                     @Override
@@ -179,69 +175,7 @@ public class CrearRuta extends AppCompatActivity {
                 });
             }
         });
-        iniciarR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String idUser = autenticador.getUser().getUid();
-                myRef = database.getReference(PATH_USERS);
-                myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        Usuarios myUser = dataSnapshot.child(autenticador.getUser().getUid()).getValue(Usuarios.class);
 
-                        String nombre = myUser.getNombre();
-                        String apellido = myUser.getApellido();
-                        final String key = myUser.getId();
-                        String correo = myUser.getCorreo();
-                        String equipo = myUser.getEquipo();
-                        List<String> listaAmigos = myUser.getListaAmigos();
-                        List<String> rutas = myUser.getRutas();
-
-                        final Usuarios usuario = new Usuarios(nombre, apellido, key, correo, listaAmigos, equipo, rutas);
-
-
-                        List<String> usuariosRuta = new ArrayList<String>();
-                        usuariosRuta.add(idUser);
-                        List<String> rutasDelUsuario = new ArrayList<String>();
-                        rutasDelUsuario = usuario.getRutas();
-                        double distancia = distance(locacionOrigen.latitude, locacionOrigen.longitude, locacionDestino.latitude, locacionDestino.longitude);
-                        recorrido.setKilometros(distancia);
-                        recorrido.setRealizado(false);
-                        recorrido.setLatitudOrigen(locacionOrigen.latitude);
-                        recorrido.setLongitudOrigen(locacionOrigen.longitude);
-                        recorrido.setLatitudDestino(locacionDestino.latitude);
-                        recorrido.setLongitudDestino(locacionDestino.longitude);
-                        recorrido.setIdReporte("clima");
-                        Calendar calendar = new GregorianCalendar();
-                        Date fechaActual = calendar.getTime();
-                        recorrido.setFecha(fechaActual.toString());
-                        String key2 = myRef.push().getKey();
-                        recorrido.setIdRuta(key2);
-                        rutasDelUsuario.add(recorrido.getIdRuta());
-                        recorrido.setUsuariosRuta(usuariosRuta);
-                        myRef = database.getReference(PATH_RUTES + key2);
-                        myRef.setValue(recorrido);
-                        usuario.setRutas(rutasDelUsuario);
-                        myRef = database.getReference(PATH_USERS + idUser);
-                        myRef.setValue(usuario);
-                        Intent intent = new Intent(getApplicationContext(),ActivityMaps.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putDouble("LatitudO", locacionOrigen.latitude);
-                        bundle.putDouble("LongitudO", locacionOrigen.longitude);
-                        bundle.putDouble("LatitudD", locacionDestino.latitude);
-                        bundle.putDouble("LongitudD", locacionDestino.longitude);
-                        bundle.putDouble("Distancia", distancia);
-                        intent.putExtra("bundle", bundle);
-                        startActivity(intent);
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-            }
-        });
         posicionA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

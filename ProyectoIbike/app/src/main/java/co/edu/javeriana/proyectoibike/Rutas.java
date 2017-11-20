@@ -26,9 +26,10 @@ public class Rutas {
     private List<String> usuariosRuta = new ArrayList<>();
     private String idReporte;
     private String nombreDestino;
+    private Clima  clima;
 
 
-    public Rutas(String idRuta, double latitudDestino, double longitudDestino, double longitudOrigen, double latitudOrigen, String fecha, double kilometros, boolean realizado, boolean validaDominio,String nombreDestino, boolean programada) {
+    public Rutas(String idRuta, double latitudDestino, double longitudDestino, double longitudOrigen, double latitudOrigen, String fecha, double kilometros, boolean realizado, boolean validaDominio,String nombreDestino, boolean programada, Clima clima) {
         this.idRuta = idRuta;
         this.latitudDestino = latitudDestino;
         this.longitudDestino = longitudDestino;
@@ -40,6 +41,7 @@ public class Rutas {
         this.validaDominio = validaDominio;
         this.nombreDestino = nombreDestino;
         this.programada = programada;
+        this.clima=clima;
     }
 
     public String getNombreDestino() {
