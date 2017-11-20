@@ -102,7 +102,7 @@ public class ActivityAmigos extends AppCompatActivity implements  NavigationView
 
         });
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot player : dataSnapshot.getChildren()) {

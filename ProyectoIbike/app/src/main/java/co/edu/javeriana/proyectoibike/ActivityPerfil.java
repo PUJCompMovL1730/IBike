@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -64,7 +65,7 @@ public class ActivityPerfil extends AppCompatActivity implements NavigationView.
     private ImageButton editardatos;
     private ImageButton fotoPerfil;
     private ImageButton add_friend, friendsButt;
-    private List<String> array = new ArrayList<String>();
+    private List<Rutas> array = new ArrayList<Rutas>();
     private Rutas ruta;
 
 
@@ -191,19 +192,33 @@ public class ActivityPerfil extends AppCompatActivity implements NavigationView.
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final String idUsuario = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 String informacion;
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(ActivityPerfil.this,
+                ArrayAdapter<Rutas> adapter = new ArrayAdapter<Rutas>(ActivityPerfil.this,
                         android.R.layout.simple_list_item_1, array);
                 for (DataSnapshot rutaI : dataSnapshot.getChildren()) {
                      ruta = rutaI.getValue(Rutas.class);
-                    if (ruta.getUsuariosRuta().get(0).toString().equalsIgnoreCase(idUsuario)) {
+                    if (ruta.getUsuariosRuta().get(0).toString().equalsIgnoreCase(idUsuario) && ruta.isRealizado() == true) {
                         informacion = "Destino: " + ruta.getNombreDestino() + "\n" +
                                 "Fecha: " + ruta.getFecha() + "\n" +
                                 "Metros recorridos: " + Integer.toString((int)ruta.getKilometros()) + "\n";
-                        array.add(informacion);
+                        array.add(ruta);
                     }
                 }
                 ListView listView = (ListView) findViewById(R.id.listaRutas);
                 listView.setAdapter(adapter);
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(getBaseContext(), RutaCompartible.class);
+                        Bundle bundle= new Bundle();
+                        bundle.putString("hasta", array.get(position).getNombreDestino() );
+                        bundle.putString("desde", array.get(position).getLatitudOrigen()+", "+array.get(position).getLongitudOrigen() );
+                        bundle.putString("dia", array.get(position).getFecha() );
+                        bundle.putString("id", array.get(position).getIdRuta() );
+                        intent.putExtra("bundle", bundle);
+                        startActivity(intent);
+                    }
+                });
 
             }
 
