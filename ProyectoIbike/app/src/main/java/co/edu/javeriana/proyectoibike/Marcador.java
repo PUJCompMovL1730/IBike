@@ -12,8 +12,17 @@ public class Marcador {
     private double latitudMarcador;
     private double longitudMarcador;
     private int multiplicador;
+    private int visitas;
 
     public Marcador() {
+    }
+
+    public int getVisitas() {
+        return visitas;
+    }
+
+    public void setVisitas(int visitas) {
+        this.visitas = visitas;
     }
 
     public String getIdMarcador() {

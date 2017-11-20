@@ -15,9 +15,27 @@ public class Evento {
     private List<String> idUsuarios;
     private double latitudOrigen;
     private double latitudDestino;
+    private double longitudOrigen;
+    private double longitudDestino;
     private String idEvento;
 
     public Evento() {
+    }
+
+    public double getLongitudOrigen() {
+        return longitudOrigen;
+    }
+
+    public void setLongitudOrigen(double longitudOrigen) {
+        this.longitudOrigen = longitudOrigen;
+    }
+
+    public double getLongitudDestino() {
+        return longitudDestino;
+    }
+
+    public void setLongitudDestino(double longitudDestino) {
+        this.longitudDestino = longitudDestino;
     }
 
     public String getIdEvento() {

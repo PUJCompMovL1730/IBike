@@ -50,7 +50,9 @@
         <activity android:name=".ActivityNoticias" />
         <activity
             android:name=".ActivityMapsE"
-            android:label="@string/title_activity_maps_e"></activity>
+            android:label="@string/title_activity_maps_e" />
+        <activity android:name=".CrearMarcador" />
+        <activity android:name=".CrearEvento"></activity>
     </application>
 
 </manifest>

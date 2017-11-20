@@ -65,22 +65,16 @@ public class ActivitySignup extends AppCompatActivity {
     private Spinner selectTeam;
     private TextView teamInfo;
 
-    public static final String PATH_USERS="users/";
 
     private ProgressDialog progressDialog;
 
-    private static final int CAMERA_INTENT = 0;
-    private static final int GALLERY_INTENT = 1;
     public static final int MY_PERMISSIONS_REQUEST_IMAGE_PICKER = 2;
-    private Intent cameraIntent;
-    private Intent galleryIntent;
     private Usuarios usuario;
     private Empresario usuarioEmpresario;
     private String nombre, apellido, correoE, contra, nombreEmpresa;
     private Uri imageURI;
     private StorageReference mStorage;
             StorageReference filePath;
-    private String PathFoto = "Default";
     private String selectedTeam = " ";
 
 
@@ -303,6 +297,7 @@ public class ActivitySignup extends AppCompatActivity {
                                 usuarioEmpresario.setEmpresario(true);
                                 usuarioEmpresario.setIdEventos(idEventos);
                                 usuarioEmpresario.setIdMarcadores(idMarcadores);
+                                usuarioEmpresario.setCorreo(correoE);
                                 myRef=database.getReference("usersE/"+key);
                                 myRef.setValue(usuarioEmpresario);
                                 Intent intent = new Intent(ActivitySignup.this, ActivityMapsE.class);

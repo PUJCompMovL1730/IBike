@@ -1,5 +1,6 @@
 package co.edu.javeriana.proyectoibike;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,8 +13,9 @@ public class Empresario {
     private String apellido;
     private boolean empresario;
     private String id;
-    private List<String> idEventos;
-    private List<String> idMarcadores;
+    private List<String> idEventos = new ArrayList<>();
+    private List<String> idMarcadores = new ArrayList<>();
+    private String correo;
 
     public Empresario() {
     }
@@ -66,5 +68,11 @@ public class Empresario {
         this.idMarcadores = idMarcadores;
     }
 
+    public String getCorreo() {
+        return correo;
+    }
 
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
 }
