@@ -222,8 +222,8 @@ public class ActivityMapsE extends AppCompatActivity implements OnMapReadyCallba
                 break;
             }
             case R.id.infoMarcador: {
-
-                //logout();
+                Intent intent = new Intent(getBaseContext(),InforMarcador.class);
+                startActivity(intent);
                 break;
             }
             case R.id.delMarcador: {
