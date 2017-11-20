@@ -83,7 +83,7 @@ public class CrearMarcador extends AppCompatActivity {
                     marca.setIdEmpresario(idEmpresario);
                     marca.setLatitudMarcador(locacionOrigen.latitude);
                     marca.setLongitudMarcador(locacionOrigen.longitude);
-                    marca.setMultiplicador(multi.getSelectedItemPosition());
+                    marca.setMultiplicador((Integer) multi.getSelectedItem());
                     marca.setDescripcion(des);
                     marca.setVisitas(0);
                     myRef = database.getReference(PATH_MARKERS + key);
