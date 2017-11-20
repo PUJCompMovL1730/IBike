@@ -195,7 +195,7 @@ public class ActivityPerfil extends AppCompatActivity implements NavigationView.
                         android.R.layout.simple_list_item_1, array);
                 for (DataSnapshot rutaI : dataSnapshot.getChildren()) {
                      ruta = rutaI.getValue(Rutas.class);
-                    if (ruta.getUsuariosRuta().get(0).toString().equalsIgnoreCase(idUsuario)) {
+                    if (ruta.getUsuariosRuta().get(0).toString().equalsIgnoreCase(idUsuario) && ruta.isRealizado() == true) {
                         informacion = "Destino: " + ruta.getNombreDestino() + "\n" +
                                 "Fecha: " + ruta.getFecha() + "\n" +
                                 "Metros recorridos: " + Integer.toString((int)ruta.getKilometros()) + "\n";
