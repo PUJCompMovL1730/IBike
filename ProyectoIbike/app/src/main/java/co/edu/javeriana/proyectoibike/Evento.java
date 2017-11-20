@@ -1,5 +1,6 @@
 package co.edu.javeriana.proyectoibike;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ public class Evento {
     private boolean estado;
     private String fecha;
     private String descripcion;
-    private List<String> idUsuarios;
+    private List<String> idUsuarios = new ArrayList<>();
     private double latitudOrigen;
     private double latitudDestino;
     private double longitudOrigen;
