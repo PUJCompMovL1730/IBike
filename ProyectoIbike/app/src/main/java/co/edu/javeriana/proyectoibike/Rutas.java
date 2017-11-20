@@ -165,7 +165,7 @@ public class Rutas {
     public String toString() {
         return "Ruta de " +
 
-                " Km " + kilometros +
+                " metros " + (int)kilometros +
                 " para llegar a " + nombreDestino  +
                 ". \nFecha: " + fecha;
     }
