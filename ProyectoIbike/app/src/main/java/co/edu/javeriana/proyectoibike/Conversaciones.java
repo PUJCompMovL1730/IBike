@@ -58,8 +58,12 @@ public class Conversaciones extends AppCompatActivity implements  NavigationView
 
         if (mNavigationView != null) {
             mNavigationView.setNavigationItemSelectedListener(this);
+        }try {
+            loadConvers();
         }
-        loadConvers();
+        catch(Exception e){
+
+        }
 
         ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
