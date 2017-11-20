@@ -54,7 +54,8 @@
         <activity android:name=".CrearMarcador" />
         <activity android:name=".CrearEvento" />
         <activity android:name=".InfoEvento" />
-        <activity android:name=".InforMarcador"></activity>
+        <activity android:name=".InforMarcador"/>
+        <activity android:name=".Noticia"/>
     </application>
 
 </manifest>
