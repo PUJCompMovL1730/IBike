@@ -335,6 +335,10 @@ public class ActivityEditProfile extends AppCompatActivity implements Navigation
                 final String key = myUser.getId();
                 String correo = myUser.getCorreo();
                 String equipo = myUser.getEquipo();
+                String nombre = myUser.getNombre();
+                mNombreUsuario.setText(nombre);
+                String apellido = myUser.getApellido();
+                mApellidoUsuario.setText(apellido);
                 List<String> listaAmigos = myUser.getListaAmigos();
                 List<String> rutas = myUser.getRutas();
 
