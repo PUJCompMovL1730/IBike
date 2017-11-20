@@ -124,6 +124,14 @@ public class RutaCompartible extends AppCompatActivity implements  NavigationVie
             public void onClick(View v) {
 
                 //compartir con facebook
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, "Mira la ruta que estoy compartiendo! "+"\n "+"Destino: "+ rout.getNombreDestino()+ "\n"+
+                        "Metros recorridos: " + Integer.toString((int)rout.getKilometros())+"\n"+"#ibike");
+                //intent.setPackage("com.facebook.katana");
+                //startActivity(intent);
+                startActivity(Intent.createChooser(intent, "Share with"));
+
 
             }
 

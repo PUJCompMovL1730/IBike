@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/addMarcador" android:title="Añadir Marcador" android:icon="@drawable/perfil"/>
-    <item android:id="@+id/cEvento" android:title="Crear Evento" android:icon="@drawable/noticias"/>
-    <item android:id="@+id/infoEvento" android:title="Información Eventos" android:icon="@drawable/estadisticas"/>
-    <item android:id="@+id/infoMarcador" android:title="Información Marcadores" android:icon="@drawable/mapa"/>
+    <item android:id="@+id/addMarcador" android:title="Añadir Marcador" android:icon="@drawable/addmarker"/>
+    <item android:id="@+id/cEvento" android:title="Crear Evento" android:icon="@drawable/crearevento"/>
+    <item android:id="@+id/infoEvento" android:title="Información Eventos" android:icon="@drawable/infoeventos"/>
+    <item android:id="@+id/infoMarcador" android:title="Información Marcadores" android:icon="@drawable/infomarker"/>
     <item android:id="@+id/logout" android:title="Salir" android:icon="@drawable/salir"/>
 </menu>
