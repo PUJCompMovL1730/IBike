@@ -56,7 +56,9 @@
         <activity android:name=".InfoEvento" />
         <activity android:name=".InforMarcador" />
         <activity android:name=".Noticia" />
-        <activity android:name=".RutaCompartible"></activity>
+        <activity android:name=".RutaCompartible" />
+        <activity android:name=".MostrarEventos" />
+        <activity android:name=".InscripcionEvento"></activity>
     </application>
 
 </manifest>
