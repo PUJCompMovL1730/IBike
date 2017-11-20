@@ -385,12 +385,15 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
 
         if (inicio) {
             Log.d("INICIO", "INICIOALV");
+
             double distance = distance(location.getLatitude(), location.getLongitude(), latitud, longitud);
             if (distance < 20) {
                 realizado=true;
                 Log.d("Termino", "Termino");
                 Log.d("Dist", String.valueOf(distanciaPropia));
                 final int puntos = (int) (distanciaPropia / 1000);
+
+
                 Log.d("Puntos Obtenidos: ", String.valueOf(puntos));
                 Snackbar.make(mDrawerLayout, "Completaste la ruta, obtuviste " + puntos + " punto(s).", Snackbar.LENGTH_LONG).show();
                 //Actualiza Base de Datos.

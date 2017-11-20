@@ -1,8 +1,10 @@
 package co.edu.javeriana.proyectoibike;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -14,10 +16,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,8 +40,10 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ActivityPerfil extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener{
+public class ActivityPerfil extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -44,9 +52,11 @@ public class ActivityPerfil extends AppCompatActivity implements  NavigationView
 
     FirebaseDatabase database;
     DatabaseReference myRef;
+    DatabaseReference myRef1;
 
     private TextView user_profile_name;
     private TextView user_profile_short_bio;
+    private TextView puntajeTotal;
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -54,6 +64,8 @@ public class ActivityPerfil extends AppCompatActivity implements  NavigationView
     private ImageButton editardatos;
     private ImageButton fotoPerfil;
     private ImageButton add_friend, friendsButt;
+    private List<String> array = new ArrayList<String>();
+    private Rutas ruta;
 
 
     @Override
@@ -61,8 +73,9 @@ public class ActivityPerfil extends AppCompatActivity implements  NavigationView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil);
 
-        database= FirebaseDatabase.getInstance();
+        database = FirebaseDatabase.getInstance();
         fotoPerfil = (ImageButton) findViewById(R.id.user_profile_photo);
+        puntajeTotal = (TextView) findViewById(R.id.puntajeTotal);
         user_profile_name = (TextView) findViewById(R.id.user_profile_name);
         user_profile_short_bio = (TextView) findViewById(R.id.user_profile_short_bio);
         editardatos = (ImageButton) findViewById(R.id.editardatos);
@@ -71,19 +84,17 @@ public class ActivityPerfil extends AppCompatActivity implements  NavigationView
         editardatos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              Intent inte = new Intent(getBaseContext(),ActivityEditProfile.class);
+                Intent inte = new Intent(getBaseContext(), ActivityEditProfile.class);
                 startActivity(inte);
             }
         });
-
-
 
 
         add_friend = (ImageButton) findViewById(R.id.add_friend);
         add_friend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent inte = new Intent(getBaseContext(),ActivityAmigos.class);
+                Intent inte = new Intent(getBaseContext(), ActivityAmigos.class);
                 startActivity(inte);
             }
         });
@@ -91,7 +102,7 @@ public class ActivityPerfil extends AppCompatActivity implements  NavigationView
         mAuth = FirebaseAuth.getInstance();
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        mToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -105,7 +116,7 @@ public class ActivityPerfil extends AppCompatActivity implements  NavigationView
         friendsButt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent inte = new Intent (getBaseContext(),UserFriends.class);
+                Intent inte = new Intent(getBaseContext(), UserFriends.class);
                 startActivity(inte);
             }
         });
@@ -113,28 +124,31 @@ public class ActivityPerfil extends AppCompatActivity implements  NavigationView
         loadUsers();
 
 
-
     }
+
     public void loadUsers() {
 
-        final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
-
+        final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
 
         myRef = database.getReference("users/");
+       // myRef1 = database.getReference("rutas/");
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    Usuarios myUser = dataSnapshot.child(currentFirebaseUser.getUid()).getValue(Usuarios.class);
+                Usuarios myUser = dataSnapshot.child(currentFirebaseUser.getUid()).getValue(Usuarios.class);
 
-                    Log.i("ss", "Encontró usuario: " + myUser.getNombre());
-                    String name = myUser.getNombre();
-                    String correo = myUser.getCorreo();
-                    String apellido = myUser.getApellido();
-                    user_profile_name.setText(name+" "+apellido);
-                    user_profile_short_bio.setText(correo);
+                Log.i("ss", "Encontró usuario: " + myUser.getNombre());
+                String name = myUser.getNombre();
+                String correo = myUser.getCorreo();
+                String apellido = myUser.getApellido();
+                double punto = myUser.getPuntuacion();
+                puntajeTotal.setText(Integer.toString((int) punto));
+                user_profile_name.setText(name + " " + apellido);
+                user_profile_short_bio.setText(correo);
                 final File localFile;
+                List<String> rutas = myUser.getRutas();
 
                 try {
                     localFile = File.createTempFile("images", "png");
@@ -142,7 +156,7 @@ public class ActivityPerfil extends AppCompatActivity implements  NavigationView
                     imagesStorage.getFile(localFile).addOnCompleteListener(new OnCompleteListener<FileDownloadTask.TaskSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<FileDownloadTask.TaskSnapshot> task) {
-                            if(task.isSuccessful()){
+                            if (task.isSuccessful()) {
                                 Uri uri = Uri.fromFile(localFile);
                                 Bitmap image = null;
                                 try {
@@ -151,8 +165,7 @@ public class ActivityPerfil extends AppCompatActivity implements  NavigationView
                                 } catch (FileNotFoundException e) {
                                     e.printStackTrace();
                                 }
-                            }
-                            else{
+                            } else {
                             }
                         }
                     });
@@ -164,18 +177,47 @@ public class ActivityPerfil extends AppCompatActivity implements  NavigationView
 
 
 
+                           }
+        @Override
+        public void onCancelled (DatabaseError databaseError){
+            Log.w("ss", "error en la consulta", databaseError.toException());
+        }
+    });
+
+        //obtenerInfo();
+        myRef1 = database.getReference("rutas/");
+        myRef1.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final String idUsuario = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                String informacion;
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(ActivityPerfil.this,
+                        android.R.layout.simple_list_item_1, array);
+                for (DataSnapshot rutaI : dataSnapshot.getChildren()) {
+                     ruta = rutaI.getValue(Rutas.class);
+                    if (ruta.getUsuariosRuta().get(0).toString().equalsIgnoreCase(idUsuario)) {
+                        informacion = "Destino: " + ruta.getNombreDestino() + "\n" +
+                                "Fecha: " + ruta.getFecha() + "\n" +
+                                "Metros recorridos: " + Integer.toString((int)ruta.getKilometros()) + "\n";
+                        array.add(informacion);
+                    }
+                }
+                ListView listView = (ListView) findViewById(R.id.listaRutas);
+                listView.setAdapter(adapter);
+
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.w("ss", "error en la consulta", databaseError.toException());
             }
         });
-    }
+}
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if(mToggle.onOptionsItemSelected(item)){
+        if (mToggle.onOptionsItemSelected(item)) {
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -223,7 +265,7 @@ public class ActivityPerfil extends AppCompatActivity implements  NavigationView
     }
 
 
-    private void logout(){
+    private void logout() {
         mAuth.signOut();
         Intent intent = new Intent(ActivityPerfil.this, ActivityLogin.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
