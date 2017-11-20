@@ -21,13 +21,14 @@ public class Rutas {
     private String fecha;
     private double kilometros;
     private boolean realizado;
+    private boolean programada;
     private boolean validaDominio;
     private List<String> usuariosRuta = new ArrayList<>();
     private String idReporte;
     private String nombreDestino;
 
 
-    public Rutas(String idRuta, double latitudDestino, double longitudDestino, double longitudOrigen, double latitudOrigen, String fecha, double kilometros, boolean realizado, boolean validaDominio,String nombreDestino) {
+    public Rutas(String idRuta, double latitudDestino, double longitudDestino, double longitudOrigen, double latitudOrigen, String fecha, double kilometros, boolean realizado, boolean validaDominio,String nombreDestino, boolean programada) {
         this.idRuta = idRuta;
         this.latitudDestino = latitudDestino;
         this.longitudDestino = longitudDestino;
@@ -38,6 +39,7 @@ public class Rutas {
         this.realizado = realizado;
         this.validaDominio = validaDominio;
         this.nombreDestino = nombreDestino;
+        this.programada = programada;
     }
 
     public String getNombreDestino() {
@@ -49,6 +51,14 @@ public class Rutas {
     }
 
     public Rutas() {
+    }
+
+    public boolean isProgramada() {
+        return programada;
+    }
+
+    public void setProgramada(boolean programada) {
+        this.programada = programada;
     }
 
     public boolean isValidaDominio() {
