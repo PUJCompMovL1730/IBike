@@ -160,4 +160,12 @@ public class Rutas {
         this.usuariosRuta = usuariosRuta;
     }
 
+    @Override
+    public String toString() {
+        return "Ruta de " +
+
+                " Km " + kilometros +
+                " para llegar a " + nombreDestino  +
+                ". \nFecha: " + fecha;
+    }
 }
