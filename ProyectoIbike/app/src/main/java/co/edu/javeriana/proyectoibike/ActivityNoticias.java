@@ -111,7 +111,7 @@ public class ActivityNoticias extends AppCompatActivity implements  NavigationVi
 
 
 
-            myRef2 = database.getReference("rutes/");
+            myRef2 = database.getReference("rutas/");
             myRef2.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -125,9 +125,14 @@ public class ActivityNoticias extends AppCompatActivity implements  NavigationVi
                         String clima = ruta.getIdReporte();
                         boolean realizado = ruta.isRealizado();
 
+
+
                         String noticion = "Fecha: " + fecha + "\n" + " El clima pronosticado es: " + clima + "\n" + "Desde: " + origen.toString() + " Hasta: " + destino.toString();
 
-                        nombresFriend.add(noticion);
+                        if(!realizado&&ruta.isProgramada()){
+                            nombresFriend.add(noticion);
+                        }
+
 
                     }
 
