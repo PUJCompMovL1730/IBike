@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -50,7 +52,7 @@ public class ActivityNoticias extends AppCompatActivity implements  NavigationVi
 
 
 
-    private Vector<String> nombresFriend = new Vector<String>();
+    private Vector<Rutas> nombresFriend = new Vector<Rutas>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,18 @@ public class ActivityNoticias extends AppCompatActivity implements  NavigationVi
 
         lista = (ListView) findViewById(R.id.noticias);
         ruta();
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getBaseContext(), Noticia.class);
+                Bundle bundle= new Bundle();
+                //bundle.putString("nombre", mens2.get(position).getNombre() +" "+ mens2.get(position).getApellido() );
+
+                intent.putExtra("bundle", bundle);
+                startActivity(intent);
+            }
+        });
+
     }
 
 
@@ -127,10 +141,8 @@ public class ActivityNoticias extends AppCompatActivity implements  NavigationVi
 
 
 
-                        String noticion = "Fecha: " + fecha + "\n" + " El clima pronosticado es: " + clima + "\n" + "Desde: " + origen.toString() + " Hasta: " + destino.toString();
-
                         if(!realizado&&ruta.isProgramada()){
-                            nombresFriend.add(noticion);
+                            nombresFriend.add(ruta);
                         }
 
 
@@ -175,7 +187,7 @@ public class ActivityNoticias extends AppCompatActivity implements  NavigationVi
                 break;
             }
             case R.id.noticias: {
-                //logout();
+                startActivity(new Intent(ActivityNoticias.this, ActivityNoticias.class));
                 break;
             }
             case R.id.estadisticas: {

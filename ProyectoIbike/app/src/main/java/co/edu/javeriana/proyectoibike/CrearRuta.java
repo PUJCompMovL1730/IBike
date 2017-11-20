@@ -60,6 +60,7 @@ public class CrearRuta extends AppCompatActivity {
     private Rutas recorrido;
     private LatLng locacionOrigen;
     private LatLng locacionDestino;
+    private String nombreDestino;
     FBAuth autenticador;
     final	static	double	RADIUS_OF_EARTH_KM	=	6371;
     public static final String PATH_USERS = "users/";
@@ -98,6 +99,7 @@ public class CrearRuta extends AppCompatActivity {
             @Override
             public void onPlaceSelected(Place place) {
                 locacionDestino = place.getLatLng();
+                nombreDestino = place.getName().toString();
             }
 
             @Override
@@ -154,7 +156,7 @@ public class CrearRuta extends AppCompatActivity {
                             String key2 = myRef.push().getKey();
                             recorrido.setIdRuta(key2);
                             recorrido.setValidaDominio(false);
-                            recorrido.setNombreDestino(fragmentDestino.getTag());
+                            recorrido.setNombreDestino(nombreDestino);
                             rutasDelUsuario.add(recorrido.getIdRuta());
                             recorrido.setUsuariosRuta(usuariosRuta);
                             myRef = database.getReference(PATH_RUTES + key2);

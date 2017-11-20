@@ -53,7 +53,11 @@
             android:label="@string/title_activity_maps_e" />
         <activity android:name=".CrearMarcador" />
         <activity android:name=".CrearEvento" />
+<<<<<<< HEAD
         <activity android:name=".InfoEvento"></activity>
+=======
+        <activity android:name=".Noticia"></activity>
+>>>>>>> origin/master
     </application>
 
 </manifest>
