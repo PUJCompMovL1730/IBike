@@ -24,9 +24,29 @@ public class Rutas {
     private boolean validaDominio;
     private List<String> usuariosRuta = new ArrayList<>();
     private String idReporte;
+    private String nombreDestino;
 
 
+    public Rutas(String idRuta, double latitudDestino, double longitudDestino, double longitudOrigen, double latitudOrigen, String fecha, double kilometros, boolean realizado, boolean validaDominio,String nombreDestino) {
+        this.idRuta = idRuta;
+        this.latitudDestino = latitudDestino;
+        this.longitudDestino = longitudDestino;
+        this.longitudOrigen = longitudOrigen;
+        this.latitudOrigen = latitudOrigen;
+        this.fecha = fecha;
+        this.kilometros = kilometros;
+        this.realizado = realizado;
+        this.validaDominio = validaDominio;
+        this.nombreDestino = nombreDestino;
+    }
 
+    public String getNombreDestino() {
+        return nombreDestino;
+    }
+
+    public void setNombreDestino(String nombreDestino) {
+        this.nombreDestino = nombreDestino;
+    }
 
     public Rutas() {
     }

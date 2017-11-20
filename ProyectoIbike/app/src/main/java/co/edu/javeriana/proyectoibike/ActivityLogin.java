@@ -58,6 +58,7 @@ public class ActivityLogin extends AppCompatActivity {
         empresa = new Empresario();
         mAuth = FirebaseAuth.getInstance();
 
+
         mUser = (EditText) findViewById(R.id.mUser);
         mPassword = (EditText) findViewById(R.id.mPassword);
         mRegistro = (TextView) findViewById(R.id.mRegistro);
@@ -75,7 +76,10 @@ public class ActivityLogin extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             usuario =  dataSnapshot.child(idUser).getValue(Usuarios.class);
                             Log.d("ss", "onAuthStateChanged:signed_in:" + idUser);
-                            startActivity(new Intent(ActivityLogin.this, ActivityMaps.class));
+                            if(usuario != null){
+                                startActivity(new Intent(ActivityLogin.this, ActivityMaps.class));
+                            }
+
                         }
 
                         @Override
@@ -90,7 +94,10 @@ public class ActivityLogin extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             empresa = dataSnapshot.child(idUserE).getValue(Empresario.class);
                             Log.d("ss", "onAuthStateChanged:signed_in:" + idUser);
-                            startActivity(new Intent(ActivityLogin.this, ActivityMapsE.class));
+                            if(empresa != null){
+                                startActivity(new Intent(ActivityLogin.this, ActivityMapsE.class));
+                            }
+
                         }
 
                         @Override

@@ -130,8 +130,8 @@ public class ActivityEditProfile extends AppCompatActivity implements Navigation
         cargarImg();
         //mNombreUsuario =
 
-                myRef = database.getReference("users/");
-        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            myRef = database.getReference("users/");
+            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             final FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

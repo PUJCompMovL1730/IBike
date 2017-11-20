@@ -1,72 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout
 
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/drawer"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context="co.edu.javeriana.proyectoibike.ActivityMenu">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ekibi.ibike.ActivityMaps">
 
-    <LinearLayout
-        android:layout_height="match_parent"
+    <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:padding="15dp">
-        <fragment
-            android:id="@+id/place_autocomplete_fragment"
+
+        <EditText
+            android:id="@+id/texto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
-            />
+            android:hint="Ingrese una dirección"
+            android:inputType="textCapSentences|textAutoCorrect" />
 
-        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/darkgray" >
+            tools:context="com.ekibi.ibike.ActivityMaps"
+            android:layout_below="@+id/texto"/>
+
+        <Button
+            android:id="@+id/recorrido"
+            android:color="#66FF0000"
+            android:alpha="0.9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/map"
+            android:layout_alignLeft="@+id/map"
+            android:text="Programar Recorrido" />
 
 
+    </RelativeLayout>
 
-            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:map="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/map"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="co.edu.javeriana.proyectoibike.ActivityMaps" />
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/white"
+        app:headerLayout="@layout/activity_header"
+        app:itemIconTint="@color/darkgray"
+        app:itemTextColor="@color/darkgray"
+        app:menu="@menu/drawermenu">
 
-            <Button
-                android:id="@+id/recorrido"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal|center_vertical"
-                android:onClick="startActivity"
-                android:text="Recorrido"
-                android:layout_alignParentBottom="true"  />
-
-        </FrameLayout >
-
-
-
-
-    </LinearLayout>
-
-
-
-<android.support.design.widget.NavigationView
-    android:id="@+id/nav_view"
-    app:headerLayout="@layout/activity_header"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    app:itemTextColor="@color/darkgray"
-    app:itemIconTint="@color/darkgray"
-    app:menu="@menu/drawermenu"
-    android:layout_gravity="start">
-
-</android.support.design.widget.NavigationView>
+    </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>
