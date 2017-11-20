@@ -6,4 +6,11 @@
     <string name="title_activity_maps_e">Map</string>
 
 
+        <string-array name="colorDeEquipo">
+            <item>Amarillo</item>
+            <item>Azul</item>
+            <item>Rojo</item>
+        </string-array>
+
+
 </resources>

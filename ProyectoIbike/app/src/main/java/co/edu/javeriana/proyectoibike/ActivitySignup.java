@@ -14,11 +14,13 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +62,8 @@ public class ActivitySignup extends AppCompatActivity {
     private RadioButton checkedRadioButton;
     private TextView mRegistro;
     private ImageButton imagenPerfil;
+    private Spinner selectTeam;
+    private TextView teamInfo;
 
     public static final String PATH_USERS="users/";
 
@@ -77,6 +81,7 @@ public class ActivitySignup extends AppCompatActivity {
     private StorageReference mStorage;
             StorageReference filePath;
     private String PathFoto = "Default";
+    private String selectedTeam = " ";
 
 
     @Override
@@ -99,6 +104,8 @@ public class ActivitySignup extends AppCompatActivity {
         rGroup = (RadioGroup)findViewById(R.id.radioGroup);
         checkedRadioButton = (RadioButton)rGroup.findViewById(R.id.nosi);
         empresa = (EditText) findViewById(R.id.empresa);
+        selectTeam = (Spinner) findViewById(R.id.equipo);
+        teamInfo = (TextView) findViewById(R.id.textEquipo) ;
 
 
         progressDialog = new ProgressDialog(this);
@@ -115,6 +122,9 @@ public class ActivitySignup extends AppCompatActivity {
         btnRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //Toast.makeText(ActivitySignup.this, selectTeam.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                selectedTeam=selectTeam.getSelectedItem().toString();
                 registerUser();
             }
         });
@@ -127,6 +137,9 @@ public class ActivitySignup extends AppCompatActivity {
         });
 
 
+
+
+
         rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
             public void onCheckedChanged(RadioGroup group, int checkedId)
@@ -134,13 +147,23 @@ public class ActivitySignup extends AppCompatActivity {
                 boolean isChecked = checkedRadioButton.isChecked();
                 if (!isChecked){
                     empresa.setVisibility(View.VISIBLE);
+                    selectTeam.setVisibility(View.INVISIBLE);
+                    teamInfo.setVisibility(View.INVISIBLE);
                 }else{
                     empresa.setVisibility(View.INVISIBLE);
+                    selectTeam.setVisibility(View.VISIBLE);
+                    teamInfo.setVisibility(View.VISIBLE);
+
+
+
                 }
             }
         });
 
+
+
     }
+
 
 
     private void seleccionarGaleria() {
@@ -257,7 +280,12 @@ public class ActivitySignup extends AppCompatActivity {
                                 usuario.setRutas(rutas);
                                 usuario.setId(key);
                                 usuario.setEmpresario(false);
-                                usuario.setEquipo("rojo");
+                                if(!checkedRadioButton.isSelected()){
+                                    usuario.setEquipo(selectedTeam);
+                                }else {
+                                    usuario.setEquipo(" ");
+                                }
+
                                 usuario.setMultiplicador(1);
                                 usuario.setPuntuacion(0);
                                 filePath = mStorage.child("Fotos").child(mAuth.getCurrentUser().getUid());
