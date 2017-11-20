@@ -461,17 +461,39 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                                     circulo.setPuntos_azul(pAz + puntos);
                                             if((radioActual-radioMinimo) != 0){
                                                 circulo.setRadioactual(radioActual-1000); //Resta al radio del circulo
+                                            } else if((radioActual-radioMinimo) == 0){
+                                                int max =  Math.max(Math.max(pA,pAz),pR);
+                                                if(max == pA){
+                                                    circulo.setIdequipo("Amarillo");
+                                                } else if(max == pAz){
+                                                    circulo.setIdequipo("Azul");
+                                                } else if(max == pR){
+                                                    circulo.setIdequipo("Rojo");
+                                                }
                                             }
                                 } else if(EquipoActual.equals("Rojo")){
                                     circulo.setPuntos_amarillo(pA - puntos);
                                     circulo.setPuntos_rojo(pR + puntos);
                                             if((radioActual-radioMinimo) != 0){
                                                 circulo.setRadioactual(radioActual-1000); //Resta al radio del circulo
-                                             }
+                                             } else if((radioActual-radioMinimo) == 0){
+                                                int max =  Math.max(Math.max(pA,pAz),pR);
+                                                if(max == pA){
+                                                    circulo.setIdequipo("Amarillo");
+                                                } else if(max == pAz){
+                                                    circulo.setIdequipo("Azul");
+                                                } else if(max == pR){
+                                                    circulo.setIdequipo("Rojo");
+                                                }
+                                            }
                                 }
 
                                 myRef = database.getReference("circulos/" + color);
                                 myRef.setValue(circulo);
+
+                                inicio = false;
+                                mMap.clear();
+                                cargarCirculos();
                             }
 
                         }
@@ -500,6 +522,18 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                                     circulo.setPuntos_azul(pAz - puntos);
                                     if((radioActual-radioMinimo) != 0){
                                         circulo.setRadioactual(radioActual-1000); //Resta al radio del circulo
+                                    } else if((radioActual-radioMinimo) == 0){
+                                        int max =  Math.max(Math.max(pA,pAz),pR);
+                                        if(max == pA){
+                                            circulo.setIdequipo("Amarillo");
+                                            circulo.setRadioactual(5000);
+                                        } else if(max == pAz){
+                                            circulo.setIdequipo("Azul");
+                                            circulo.setRadioactual(5000);
+                                        } else if(max == pR){
+                                            circulo.setIdequipo("Rojo");
+                                            circulo.setRadioactual(5000);
+                                        }
                                     }
                                 } else if(EquipoActual.equals("Azul")){
                                     circulo.setPuntos_azul(pAz + puntos);
@@ -509,11 +543,27 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                                     circulo.setPuntos_rojo(pR + puntos);
                                     if((radioActual-radioMinimo) != 0){
                                         circulo.setRadioactual(radioActual-1000); //Resta al radio del circulo
+                                    } else if((radioActual-radioMinimo) == 0){
+                                        int max =  Math.max(Math.max(pA,pAz),pR);
+                                        if(max == pA){
+                                            circulo.setIdequipo("Amarillo");
+                                            circulo.setRadioactual(5000);
+                                        } else if(max == pAz){
+                                            circulo.setIdequipo("Azul");
+                                            circulo.setRadioactual(5000);
+                                        } else if(max == pR){
+                                            circulo.setIdequipo("Rojo");
+                                            circulo.setRadioactual(5000);
+                                        }
                                     }
                                 }
 
                                 myRef = database.getReference("circulos/" + color);
                                 myRef.setValue(circulo);
+
+                                inicio = false;
+                                mMap.clear();
+                                cargarCirculos();
                             }
 
                         }
@@ -542,12 +592,36 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                                     circulo.setPuntos_rojo(pR - puntos);
                                     if((radioActual-radioMinimo) != 0){
                                         circulo.setRadioactual(radioActual-1000); //Resta al radio del circulo
+                                    } else if((radioActual-radioMinimo) == 0){
+                                        int max =  Math.max(Math.max(pA,pAz),pR);
+                                        if(max == pA){
+                                            circulo.setIdequipo("Amarillo");
+                                            circulo.setRadioactual(5000);
+                                        } else if(max == pAz){
+                                            circulo.setIdequipo("Azul");
+                                            circulo.setRadioactual(5000);
+                                        } else if(max == pR){
+                                            circulo.setIdequipo("Rojo");
+                                            circulo.setRadioactual(5000);
+                                        }
                                     }
                                 } else if(EquipoActual.equals("Azul")){
                                     circulo.setPuntos_azul(pAz + puntos);
                                     circulo.setPuntos_rojo(pR - puntos);
                                     if((radioActual-radioMinimo) != 0){
                                         circulo.setRadioactual(radioActual-1000); //Resta al radio del circulo
+                                    } else if((radioActual-radioMinimo) == 0){
+                                        int max =  Math.max(Math.max(pA,pAz),pR);
+                                        if(max == pA){
+                                            circulo.setIdequipo("Amarillo");
+                                            circulo.setRadioactual(5000);
+                                        } else if(max == pAz){
+                                            circulo.setIdequipo("Azul");
+                                            circulo.setRadioactual(5000);
+                                        } else if(max == pR){
+                                            circulo.setIdequipo("Rojo");
+                                            circulo.setRadioactual(5000);
+                                        }
                                     }
 
                                 } else if(EquipoActual.equals("Rojo")){
@@ -557,6 +631,10 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
 
                                 myRef = database.getReference("circulos/" + color);
                                 myRef.setValue(circulo);
+
+                                inicio = false;
+                                mMap.clear();
+                                cargarCirculos();
                             }
 
                         }
@@ -570,18 +648,6 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                 }
 
 
-
-
-
-
-
-
-
-
-
-                inicio = false;
-                mMap.clear();
-                cargarCirculos();
             } else {
                 Log.d("No Termino", "HPTA VIDA :'v");
             }
@@ -592,30 +658,119 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
 
     public void cargarCirculos() {
 
+        myRef = database.getReference("circulos/");
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String Amarillo = "Amarillo";
+                if (Amarillo != null){
+                    Circulos circulo = dataSnapshot.child(Amarillo).getValue(Circulos.class);
+                    String colorCirculo = circulo.getIdequipo();
+                    int radioActual = circulo.getRadioactual();
+                    if(colorCirculo.equals("Amarillo")){
+                        CircleOptions circleOptions = new CircleOptions() //Amarillo
+                                .center(new LatLng(4.626895, -74.064181)) //Cambiar Lat Lng
+                                .strokeWidth(10)
+                                .fillColor(Color.argb(128, 255,255,0))
+                                .strokeColor(Color.argb(128, 255,255,0))
+                                .radius(radioActual); //Cambiar Radio
+                        mMap.addCircle(circleOptions);
+                    } else if(colorCirculo.equals("Azul")){
+                        CircleOptions circleOptions = new CircleOptions() //Amarillo
+                                .center(new LatLng(4.626895, -74.064181)) //Cambiar Lat Lng
+                                .strokeWidth(10)
+                                .fillColor(Color.argb(128, 0,0,255))
+                                .strokeColor(Color.argb(128, 0,0,255))
+                                .radius(radioActual); //Cambiar Radio
+                        mMap.addCircle(circleOptions);
+                    } else if(colorCirculo.equals("Rojo")){
+                        CircleOptions circleOptions = new CircleOptions() //Amarillo
+                                .center(new LatLng(4.626895, -74.064181)) //Cambiar Lat Lng
+                                .strokeWidth(10)
+                                .fillColor(Color.argb(128, 255,0,0))
+                                .strokeColor(Color.argb(128, 255,0,0))
+                                .radius(radioActual); //Cambiar Radio
+                        mMap.addCircle(circleOptions);
+                    }
+                }
+                String Azul= "Azul";
+                if (Azul != null){
+                    Circulos circulo = dataSnapshot.child(Azul).getValue(Circulos.class);
+                    String colorCirculo = circulo.getIdequipo();
+                    int radioActual = circulo.getRadioactual();
 
-        CircleOptions circleOptions = new CircleOptions() //Amarillo
-                .center(new LatLng(4.626895, -74.064181)) //Cambiar Lat Lng
-                .strokeWidth(10)
-                .fillColor(Color.argb(128, 102, 216, 249))
-                .strokeColor(Color.argb(128, 102, 216, 249))
-                .radius(5000); //Cambiar Radio
-        mMap.addCircle(circleOptions);
+                    if(colorCirculo.equals("Amarillo")){
+                        CircleOptions circleOptions = new CircleOptions() //Amarillo
+                                .center(new LatLng(4.728902, -74.113546)) //Cambiar Lat Lng
+                                .strokeWidth(10)
+                                .fillColor(Color.argb(128, 255,255,0))
+                                .strokeColor(Color.argb(128, 255,255,0))
+                                .radius(radioActual); //Cambiar Radio
+                        mMap.addCircle(circleOptions);
+                    } else if(colorCirculo.equals("Azul")){
+                        CircleOptions circleOptions = new CircleOptions() //Amarillo
+                                .center(new LatLng(4.728902, -74.113546)) //Cambiar Lat Lng
+                                .strokeWidth(10)
+                                .fillColor(Color.argb(128, 0,0,255))
+                                .strokeColor(Color.argb(128, 0,0,255))
+                                .radius(radioActual); //Cambiar Radio
+                        mMap.addCircle(circleOptions);
+                    } else if(colorCirculo.equals("Rojo")){
+                        CircleOptions circleOptions = new CircleOptions() //Amarillo
+                                .center(new LatLng(4.728902, -74.113546)) //Cambiar Lat Lng
+                                .strokeWidth(10)
+                                .fillColor(Color.argb(128, 255,0,0))
+                                .strokeColor(Color.argb(128, 255,0,0))
+                                .radius(radioActual); //Cambiar Radio
+                        mMap.addCircle(circleOptions);
+                    }
+                }
+                String Rojo= "Rojo";
+                if (Rojo != null){
+                    Circulos circulo = dataSnapshot.child(Rojo).getValue(Circulos.class);
+                    String colorCirculo = circulo.getIdequipo();
+                    int radioActual = circulo.getRadioactual();
 
-        CircleOptions circleOptions2 = new CircleOptions() //Azul
-                .center(new LatLng(4.728902, -74.113546))
-                .strokeWidth(10)
-                .fillColor(Color.argb(128, 248,243,053))
-                .strokeColor(Color.argb(128, 248,243,053))
-                .radius(5000);
-        mMap.addCircle(circleOptions2);
+                    if(colorCirculo.equals("Amarillo")){
+                        CircleOptions circleOptions = new CircleOptions() //Amarillo
+                                .center(new LatLng(4.616416, -74.153490)) //Cambiar Lat Lng
+                                .strokeWidth(10)
+                                .fillColor(Color.argb(128, 255,255,0))
+                                .strokeColor(Color.argb(128, 255,255,0))
+                                .radius(radioActual); //Cambiar Radio
+                        mMap.addCircle(circleOptions);
+                    } else if(colorCirculo.equals("Azul")){
+                        CircleOptions circleOptions = new CircleOptions() //Amarillo
+                                .center(new LatLng(4.616416, -74.153490)) //Cambiar Lat Lng
+                                .strokeWidth(10)
+                                .fillColor(Color.argb(128, 0,0,255))
+                                .strokeColor(Color.argb(128, 0,0,255))
+                                .radius(radioActual); //Cambiar Radio
+                        mMap.addCircle(circleOptions);
+                    } else if(colorCirculo.equals("Rojo")){
+                        CircleOptions circleOptions = new CircleOptions() //Amarillo
+                                .center(new LatLng(4.616416, -74.153490)) //Cambiar Lat Lng
+                                .strokeWidth(10)
+                                .fillColor(Color.argb(128, 255,0,0))
+                                .strokeColor(Color.argb(128, 255,0,0))
+                                .radius(radioActual); //Cambiar Radio
+                        mMap.addCircle(circleOptions);
+                    }
+                }
+            }
 
-        CircleOptions circleOptions3 = new CircleOptions() //Rojo
-                .center(new LatLng(4.616416, -74.153490))
-                .strokeWidth(10)
-                .fillColor(Color.argb(128, 255, 0, 0))
-                .strokeColor(Color.argb(128, 255, 0, 0))
-                .radius(5000);
-        mMap.addCircle(circleOptions3);
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
+
 
     }
 
