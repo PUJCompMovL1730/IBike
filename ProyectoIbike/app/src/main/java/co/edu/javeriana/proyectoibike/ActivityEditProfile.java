@@ -265,11 +265,7 @@ public class ActivityEditProfile extends AppCompatActivity implements Navigation
                 break;
             }
             case R.id.noticias: {
-                //logout();
-                break;
-            }
-            case R.id.estadisticas: {
-                //logout();
+                startActivity(new Intent(ActivityEditProfile.this, ActivityNoticias.class));
                 break;
             }
             case R.id.mapa: {
@@ -278,6 +274,10 @@ public class ActivityEditProfile extends AppCompatActivity implements Navigation
             }
             case R.id.ajustes: {
                 startActivity(new Intent(ActivityEditProfile.this, Conversaciones.class));
+                break;
+            }
+            case R.id.eventos: {
+                startActivity(new Intent(ActivityEditProfile.this, MostrarEventos.class));
                 break;
             }
             case R.id.logout: {

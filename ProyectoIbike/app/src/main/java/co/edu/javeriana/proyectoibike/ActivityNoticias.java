@@ -192,10 +192,6 @@ public class ActivityNoticias extends AppCompatActivity implements  NavigationVi
                 startActivity(new Intent(ActivityNoticias.this, ActivityNoticias.class));
                 break;
             }
-            case R.id.estadisticas: {
-                //logout();
-                break;
-            }
             case R.id.mapa: {
                 startActivity(new Intent(ActivityNoticias.this, ActivityMaps.class));
                 break;
@@ -203,6 +199,10 @@ public class ActivityNoticias extends AppCompatActivity implements  NavigationVi
             case R.id.ajustes: {
                 startActivity(new Intent(ActivityNoticias.this, Conversaciones.class));
                 //logout();
+                break;
+            }
+            case R.id.eventos: {
+                startActivity(new Intent(ActivityNoticias.this, MostrarEventos.class));
                 break;
             }
             case R.id.logout: {

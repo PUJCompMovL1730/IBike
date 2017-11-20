@@ -178,11 +178,7 @@ public class Mensajes extends AppCompatActivity implements  NavigationView.OnNav
                 break;
             }
             case R.id.noticias: {
-                //logout();
-                break;
-            }
-            case R.id.estadisticas: {
-                //logout();
+                startActivity(new Intent(Mensajes.this, ActivityNoticias.class));
                 break;
             }
             case R.id.mapa: {
@@ -191,6 +187,10 @@ public class Mensajes extends AppCompatActivity implements  NavigationView.OnNav
             }
             case R.id.ajustes: {
                 startActivity(new Intent(Mensajes.this, Conversaciones.class));
+                break;
+            }
+            case R.id.eventos: {
+                startActivity(new Intent(Mensajes.this, MostrarEventos.class));
                 break;
             }
             case R.id.logout: {

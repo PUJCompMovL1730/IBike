@@ -121,10 +121,6 @@ public class MostrarEventos extends AppCompatActivity implements  NavigationView
                 startActivity(new Intent(MostrarEventos.this, ActivityNoticias.class));
                 break;
             }
-            case R.id.estadisticas: {
-                //logout();
-                break;
-            }
             case R.id.mapa: {
                 startActivity(new Intent(MostrarEventos.this, ActivityMaps.class));
                 break;
@@ -132,6 +128,10 @@ public class MostrarEventos extends AppCompatActivity implements  NavigationView
             case R.id.ajustes: {
                 startActivity(new Intent(MostrarEventos.this, Conversaciones.class));
                 //logout();
+                break;
+            }
+            case R.id.eventos: {
+                startActivity(new Intent(MostrarEventos.this, MostrarEventos.class));
                 break;
             }
             case R.id.logout: {

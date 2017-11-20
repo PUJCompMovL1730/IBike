@@ -270,12 +270,9 @@ public class ActivityMaps extends AppCompatActivity implements OnMapReadyCallbac
                 startActivity(new Intent(ActivityMaps.this, ActivityNoticias.class));
                 break;
             }
-            case R.id.estadisticas: {
-                //logout();
-                break;
-            }
             case R.id.mapa: {
-
+                startActivity(new Intent(ActivityMaps.this, ActivityMaps.class));
+                break;
             }
             case R.id.ajustes: {
                 startActivity(new Intent(ActivityMaps.this, Conversaciones.class));

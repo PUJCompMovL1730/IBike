@@ -157,10 +157,6 @@ public class RutaCompartible extends AppCompatActivity implements  NavigationVie
                 startActivity(new Intent(RutaCompartible.this, ActivityNoticias.class));
                 break;
             }
-            case R.id.estadisticas: {
-                //logout();
-                break;
-            }
             case R.id.mapa: {
                 startActivity(new Intent(RutaCompartible.this, ActivityMaps.class));
                 break;
@@ -168,6 +164,10 @@ public class RutaCompartible extends AppCompatActivity implements  NavigationVie
             case R.id.ajustes: {
                 startActivity(new Intent(RutaCompartible.this, Conversaciones.class));
                 //logout();
+                break;
+            }
+            case R.id.eventos: {
+                startActivity(new Intent(RutaCompartible.this, MostrarEventos.class));
                 break;
             }
             case R.id.logout: {

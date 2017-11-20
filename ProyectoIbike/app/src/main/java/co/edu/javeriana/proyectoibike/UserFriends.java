@@ -116,11 +116,7 @@ public class UserFriends extends AppCompatActivity implements  NavigationView.On
                 break;
             }
             case R.id.noticias: {
-                //logout();
-                break;
-            }
-            case R.id.estadisticas: {
-                //logout();
+                startActivity(new Intent(UserFriends.this, ActivityNoticias.class));
                 break;
             }
             case R.id.mapa: {
@@ -128,7 +124,11 @@ public class UserFriends extends AppCompatActivity implements  NavigationView.On
                 break;
             }
             case R.id.ajustes: {
-                //logout();
+                startActivity(new Intent(UserFriends.this, Conversaciones.class));
+                break;
+            }
+            case R.id.eventos: {
+                startActivity(new Intent(UserFriends.this, MostrarEventos.class));
                 break;
             }
             case R.id.logout: {

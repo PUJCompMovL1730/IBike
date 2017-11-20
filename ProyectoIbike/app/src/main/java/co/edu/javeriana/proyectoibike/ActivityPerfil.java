@@ -251,16 +251,16 @@ public class ActivityPerfil extends AppCompatActivity implements NavigationView.
                 startActivity(new Intent(ActivityPerfil.this, ActivityNoticias.class));
                 break;
             }
-            case R.id.estadisticas: {
-                //logout();
-                break;
-            }
             case R.id.mapa: {
                 startActivity(new Intent(ActivityPerfil.this, ActivityMaps.class));
                 break;
             }
             case R.id.ajustes: {
                 startActivity(new Intent(ActivityPerfil.this, Conversaciones.class));
+                break;
+            }
+            case R.id.eventos: {
+                startActivity(new Intent(ActivityPerfil.this, MostrarEventos.class));
                 break;
             }
             case R.id.logout: {

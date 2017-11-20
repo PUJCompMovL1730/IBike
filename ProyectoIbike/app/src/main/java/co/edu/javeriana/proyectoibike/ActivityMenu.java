@@ -69,11 +69,7 @@ public class ActivityMenu extends AppCompatActivity implements  NavigationView.O
                 break;
             }
             case R.id.noticias: {
-                //logout();
-                break;
-            }
-            case R.id.estadisticas: {
-                //logout();
+                startActivity(new Intent(ActivityMenu.this, ActivityNoticias.class));
                 break;
             }
             case R.id.mapa: {

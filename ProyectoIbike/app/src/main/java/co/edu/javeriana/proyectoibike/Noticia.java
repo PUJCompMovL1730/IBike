@@ -130,10 +130,6 @@ public class Noticia extends AppCompatActivity implements  NavigationView.OnNavi
                 startActivity(new Intent(Noticia.this, ActivityNoticias.class));
                 break;
             }
-            case R.id.estadisticas: {
-                //logout();
-                break;
-            }
             case R.id.mapa: {
                 startActivity(new Intent(Noticia.this, ActivityMaps.class));
                 break;

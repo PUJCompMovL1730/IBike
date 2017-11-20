@@ -283,11 +283,7 @@ public class ActivityDetailFriend extends AppCompatActivity implements  Navigati
                 break;
             }
             case R.id.noticias: {
-                //logout();
-                break;
-            }
-            case R.id.estadisticas: {
-                //logout();
+                startActivity(new Intent(ActivityDetailFriend.this, ActivityNoticias.class));
                 break;
             }
             case R.id.mapa: {
@@ -295,7 +291,11 @@ public class ActivityDetailFriend extends AppCompatActivity implements  Navigati
                 break;
             }
             case R.id.ajustes: {
-                //logout();
+                startActivity(new Intent(ActivityDetailFriend.this, Conversaciones.class));
+                break;
+            }
+            case R.id.eventos: {
+                startActivity(new Intent(ActivityDetailFriend.this, MostrarEventos.class));
                 break;
             }
             case R.id.logout: {

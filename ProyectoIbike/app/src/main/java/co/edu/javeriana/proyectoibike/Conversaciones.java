@@ -135,11 +135,7 @@ public class Conversaciones extends AppCompatActivity implements  NavigationView
                 break;
             }
             case R.id.noticias: {
-                //logout();
-                break;
-            }
-            case R.id.estadisticas: {
-                //logout();
+                startActivity(new Intent(Conversaciones.this, ActivityNoticias.class));
                 break;
             }
             case R.id.mapa: {
@@ -148,6 +144,10 @@ public class Conversaciones extends AppCompatActivity implements  NavigationView
             }
             case R.id.ajustes: {
                 startActivity(new Intent(Conversaciones.this, Conversaciones.class));
+                break;
+            }
+            case R.id.eventos: {
+                startActivity(new Intent(Conversaciones.this, MostrarEventos.class));
                 break;
             }
             case R.id.logout: {

@@ -1,5 +1,6 @@
 package co.edu.javeriana.proyectoibike;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -168,11 +169,7 @@ public class ActivityAmigos extends AppCompatActivity implements  NavigationView
                 break;
             }
             case R.id.noticias: {
-                //logout();
-                break;
-            }
-            case R.id.estadisticas: {
-                //logout();
+                startActivity(new Intent(ActivityAmigos.this, ActivityNoticias.class));
                 break;
             }
             case R.id.mapa: {
@@ -181,6 +178,10 @@ public class ActivityAmigos extends AppCompatActivity implements  NavigationView
             }
             case R.id.ajustes: {
                 startActivity(new Intent(ActivityAmigos.this, Conversaciones.class));
+                break;
+            }
+            case R.id.eventos: {
+                startActivity(new Intent(ActivityAmigos.this, MostrarEventos.class));
                 break;
             }
             case R.id.logout: {
