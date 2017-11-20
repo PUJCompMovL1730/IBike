@@ -1,9 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="co.edu.javeriana.proyectoibike.RutaCompartible">
+    tools:context="co.edu.javeriana.proyectoibike.ActivityMenu">
 
-</android.support.constraint.ConstraintLayout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="co.edu.javeriana.proyectoibike.RutaCompartible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ruta completada"
+            android:id="@+id/texto"
+            android:textSize="25dp"
+            android:layout_margin="20dp"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ruta planeada desde: "
+            android:id="@+id/desde"
+            android:textSize="15dp"
+            android:layout_margin="15dp"
+            android:layout_below="@+id/texto"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hasta: "
+            android:id="@+id/hasta"
+            android:textSize="15dp"
+            android:layout_margin="15dp"
+            android:layout_below="@+id/desde"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            />
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="El día: "
+        android:id="@+id/dia"
+        android:textSize="15dp"
+        android:layout_margin="15dp"
+        android:layout_below="@+id/hasta"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Clima: "
+            android:id="@+id/clima"
+            android:textSize="15dp"
+            android:layout_margin="10dp"
+            android:layout_below="@+id/dia"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:id="@+id/dirviento"
+            android:textSize="12dp"
+            android:layout_margin="10dp"
+            android:layout_below="@+id/clima"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:id="@+id/velviento"
+            android:textSize="12dp"
+            android:layout_margin="10dp"
+            android:layout_below="@+id/dirviento"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:id="@+id/humedad"
+            android:textSize="12dp"
+            android:layout_margin="10dp"
+            android:layout_below="@+id/velviento"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:id="@+id/temperatura"
+            android:textSize="12dp"
+            android:layout_margin="10dp"
+            android:layout_below="@+id/humedad"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" "
+            android:id="@+id/estado"
+            android:textSize="12dp"
+            android:layout_margin="10dp"
+            android:layout_below="@+id/temperatura"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Compartir en Facebook"
+            android:id="@+id/unirse"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"/>
+
+
+    </RelativeLayout>
+
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        app:headerLayout="@layout/activity_header"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        app:itemTextColor="@color/darkgray"
+        app:itemIconTint="@color/darkgray"
+        app:menu="@menu/drawermenu"
+        android:layout_gravity="start">
+
+    </android.support.design.widget.NavigationView>
+
+</android.support.v4.widget.DrawerLayout>
+
